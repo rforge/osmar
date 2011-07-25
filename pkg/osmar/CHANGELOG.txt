@@ -1,0 +1,48 @@
+0.13-6
+	- merge function added
+	- fixed findTime
+0.13-5
+	- helpFile findID, findKeyValue & findTime
+	- expanded findID.OSM & compCheck
+0.13-4
+	- helpFile OSM-classes, plot-methods & osm-package
+	- fixed plot.OSM
+0.13-3
+	- added rgdal to packages
+0.13-2
+	- bbox2coords fixed
+	- helpFile bbox2coords & getOSMObject
+0.13-1
+	- added new function findTime
+	- dropping unused levels at findID
+	- expanded getBboxXML
+0.13
+	- changed name findElement into findID
+	- added new function findKeyValue
+	- expanded summary & print.summary functions
+0.12-4
+	- added new function summary.Relation
+	- added new function print.Relation
+	- compCheck: fixed error
+	- findElement.OSM: new stopifnot
+	- added new function plot.OSM
+	- renewed plot.Node
+0.12-3
+	- findElement.OSM: added "check" and what="way" paramater
+	- added new function compCheck (no namespace)
+	- added wayMember to class Node =>OSM
+	- plotValue.Way: added "key" parameter
+	- added new function extractValues (no namespace)
+	- added new function extractValueAll (no namespace)
+0.12-2
+	- added new function findElement.Way
+	- added new function plotValue.Way
+	- added new function findElement.Relation
+	- added new function findElement.OSM
+0.12-1
+	- Restructure of OSM object.
+	- added new NODE, WAY and Relation classes
+	- renamed functions Node, Way, Relation into gNode, gWay and gRelation
+	- added print/plot functions for Node, Way & Relation classes
+	- added new function: findElement.Node
+	- added new function "plotValue.Node"
