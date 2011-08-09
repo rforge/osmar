@@ -8,7 +8,7 @@ function(XML, crs=CRS("+init=epsg:4326")){
     return(paste(c("no elements of type", eltype, "recorded"), collapse=" "))
     
   nodesmeta<-getXMLMeta(XML)
-  nodescoords<-cbind(nodesmeta$lon, nodesmeta$lat)
+#  nodescoords<-cbind(nodesmeta$lon, nodesmeta$lat)
   nodescoords<-data.frame(lon=nodesmeta$lon, lat=nodesmeta$lat, row.names=nodesmeta$id)
   ret<- SpatialPointsDataFrame(coords=nodescoords, proj4string=crs,
                                       data=as.data.frame(nodesmeta), match.ID=TRUE)

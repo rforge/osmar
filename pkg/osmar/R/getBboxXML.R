@@ -1,5 +1,5 @@
 getBboxXML <-
-function(coords, URL=FALSE){
+function(coords, URL=TRUE){
     ##  coords  = 4 Grenzen, die die BoundingBox bilden.
     ##              in der Form c(left [lon], bottom [lat], right [lon], top [lat])
 
@@ -9,7 +9,7 @@ function(coords, URL=FALSE){
   xml<- xmlParse(response)   ##class "XMLInternalDocument" "XMLAbstractDocument" "oldClass"
                               ## Anzeigen des Kerns
   core<- xmlRoot(xml)        ##class "XMLInternalElementNode" "XMLInternalNode"        "XMLAbstractNode"
-  if(URL==TRUE) print(request)
+  if(URL==TRUE) cat(paste(c("Request: \"", request, "\""), collapse=""), sep="\n")
   if(xmlName(core)=="osm")
     return(core)
   if(xmlName(core)=="html"){
