@@ -85,6 +85,8 @@ summary.OSM <- function(object,...){
   ret$nodeSummary<- summary(x$Node)
   ret$waySummary<- summary(x$Way)
   ret$relationSummary<-summary(x$Relation)
+  ret$noOSM<-rbind(ret$nodeSummary$noNode,ret$waySummary$noWay,ret$relationSummary$noRelation)
+  row.names(ret$noOSM)<-c("Nodes","Ways","Relations")  
   class(ret)<-"summary.OSM"
   ret
 }

@@ -28,3 +28,7 @@ print.summary.Relation<- function(x,...){
   x<-x[!names(x) %in% c("relationAllValue", "topRelationUser")]
   print(x)
 }
+
+print.summary.OSM <- function(x,...){
+  print(x$noOSM)
+}
