@@ -15,20 +15,24 @@ print.Relation<-function(x,...){
 }
 
 print.summary.Node<- function(x,...){
-  x<-x[!names(x) %in% c("nodeAllValue", "topNodeUser")]
+  x<-x[!names(x) %in% c("allValue", "topUser")]
   print(x)
 }
 
 print.summary.Way<- function(x,...){
-  x<-x[!names(x) %in% c("wayAllValue", "topWayUser")]
+  x<-x[!names(x) %in% c("allValue", "topUser")]
   print(x)
 }
 
 print.summary.Relation<- function(x,...){
-  x<-x[!names(x) %in% c("relationAllValue", "topRelationUser")]
+  x<-x[!names(x) %in% c("allValue", "topUser")]
   print(x)
 }
 
 print.summary.OSM <- function(x,...){
-  print(x$noOSM)
+  print(x$number)
+  cat(c("\n","timestamp"), sep="\n")
+  print(x$times)
+  cat(c("\n","BoundingBox"), sep="\n")
+  print(x$Bbox)
 }

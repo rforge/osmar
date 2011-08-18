@@ -8,7 +8,7 @@
   defined by "ID". It can return just the information about the element or the FULL-information   
 }
 \usage{
-getElementXML(ID, element = "node", full = FALSE)
+getElementXML(ID, element = "", full = FALSE)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{

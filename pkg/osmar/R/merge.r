@@ -1,7 +1,7 @@
 merge.wayDataFrame<-merge.relationDataFrame<-merge.nodeDataFrame <-
 merge.wayMember<- merge.relationMember <-
-merge.relationMeta <-function(x,y,...){
-  z<-list(x,y,...)
+merge.relationMeta <- merge.wayMeta <-function(x, ...){
+  z<-list(x,...)
   ret<-do.call("rbind", z)
   ret<-unique(ret)
   return(ret)
@@ -33,26 +33,60 @@ merge.SpatialLinesDataFrame <- function(x,y,...){
 
 merge.Node <- function(x,y,...){
   z<-list(x,y,...)
-  nodeData<-do.call("merge", lapply(z, function(k) k[[1]]))
-  nodesSP<-do.call("merge", lapply(z, function(k) k[[2]]))
+  le<-length(z)
+  
+  firstNotChar<-which(sapply(z, function(k) class(k[[1]])[1])!="character")
+  if(length(firstNotChar)!=0){
+    nodeData<-do.call("merge", lapply(z[firstNotChar], function(k) k[[1]]))
+  } else {nodeData<-"no data of node elements recorded"}
+  
+  scndNotChar<-which(sapply(z, function(k) class(k[[2]])[1])!="character")
+  if(length(scndNotChar)!=0){
+    nodesSP<-do.call("merge", lapply(z[scndNotChar], function(k) k[[2]]))
+  } else {nodesSP<-"no elements of type node recorded"}  
+
   ret<-Node(nodeData, nodesSP)
   ret
 }
 
 merge.Way <- function(x,y,...){
   z<-list(x,y,...)
-  wayData<-do.call("merge", lapply(z, function(k) k[[1]]))
+  le<-length(z)
+  
+  firstNotChar<-which(sapply(z, function(k) class(k[[1]])[1])!="character")
+  if(length(firstNotChar)!=0){
+    wayData<-do.call("merge", lapply(z, function(k) k[[1]]))
+  } else{wayData<-"no data of way elements recorded"}
+  
   waySP<-do.call("merge", lapply(z, function(k) k[[2]]))
-  wayMem<-do.call("merge", lapply(z, function(k) k[[3]]))
+  
+  thirdNotChar<-which(sapply(z, function(k) class(k[[3]])[1])!="character")
+  if(length(thirdNotChar)!=0){
+    wayMem<-do.call("merge", lapply(z[thirdNotChar], function(k) k[[3]]))
+  } else{wayMem<-"no elements of type way recorded"}
+  
   ret<-Way(wayData, waySP, wayMem)
   ret
 }
 
 merge.Relation<- function(x,y,...){
   z<-list(x,y,...)
-  relationMeta<-do.call("merge", lapply(z, function(k) k[[1]]))
-  relationData<-do.call("merge", lapply(z, function(k) k[[2]]))
-  relationMem<-do.call("merge", lapply(z, function(k) k[[3]]))
+  le<-length(z)
+  firstNotChar<-which(sapply(z, function(k) class(k[[1]])[1])!="character")
+  if(length(firstNotChar)!=0){
+    relationMeta<-do.call("merge", lapply(z[firstNotChar], function(k) k[[1]]))
+  } else{relationMeta<-"no elements of type relation recorded"}
+  
+  scndNotChar<-which(sapply(z, function(k) class(k[[2]])[1])!="character")
+  if(length(scndNotChar)!=0){
+    relationData<-do.call("merge", lapply(z[scndNotChar], function(k) k[[2]]))
+  } else{relationData<-"no data of relation elements recorded"}
+  
+  thirdNotChar<-which(sapply(z, function(k) class(k[[3]])[1])!="character")
+  if(length(thirdNotChar)!=0){
+    relationMem<-do.call("merge", lapply(z[thirdNotChar], function(k) k[[3]]))
+  } else{relationMem<-"no elements of type relation recorded"}
+  
   ret<-Relation(relationMeta, relationData, relationMem)
   ret
 }

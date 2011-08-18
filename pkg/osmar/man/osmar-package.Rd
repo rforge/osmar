@@ -14,18 +14,17 @@
 \tabular{ll}{
     Package: \tab osmar\cr
     Type: \tab Package\cr
-    Version: \tab 0.13-4\cr
-    Date: \tab 2011-07-06\cr
+    Version: \tab 1.0\cr
+    Date: \tab 2011-08-30\cr
     License: \tab GPL-2\cr
     LazyLoad: \tab yes\cr
 }
 
 }
 \author{
-  Thomas Schlesinger
+  Thomas Schlesinger and Manuel Eugster
   
   Maintainer: Thomas Schlesinger <tho.schlesinger@googlemail.com>
-  ~~ The author and/or maintainer of the package ~~
 }
 \references{
 %~~ Literature or other references for background information ~~
@@ -37,7 +36,9 @@
   \code{\link{getOSMObject}}
     \code{\link{XML}}
     \code{\link{RCurl}}
+    \code{\link{bitops}}
     \code{\link{sp}}
+    \code{\link{gtools}}
 }
 \examples{
 %~~ simple examples of the most important functions ~~

@@ -1,4 +1,5 @@
 \name{plot-osmar}
+\alias{plot.osmar}
 \alias{plot.OSM}
 \alias{plot.Node}
 \alias{plot.Way}
@@ -11,9 +12,9 @@
   
 }
 \usage{
-  \method{plot}{Node}(x, pch=20, data="no",...)
+  \method{plot}{Node}(x, pch=20, data="no", ptcol="red",...)
   \method{plot}{Way}(x, ...)
-  \method{plot}{OSM}(x, nodes=FALSE, ...)
+  \method{plot}{OSM}(x, nodes=FALSE, ptcol="red", ...)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -22,7 +23,8 @@
   \item{data}{three options: (1) "no"= all Nodes will be plotted, 
                 (2) "yes"= Nodes with additional data will be marked with pch=8 and col="red"
                 (3) "only"= only Nodes with data will be plotted}
-  \item{nodes}{Nodes with additional data will be marked with col="red"}
+  \item{nodes}{Nodes with additional data will be marked}
+  \item{ptcol}{color for Nodes with additional data.}
   \item{\dots}{Arguments to be passed to plot-methods}
 }
 \details{

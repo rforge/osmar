@@ -1,13 +1,13 @@
-\name{findID.OSM}
-\alias{findID.OSM}
+\name{findID}
 \alias{findID}
+\alias{findID.OSM}
 \title{subset of a specific ID}
 \description{
   Given a \code{\link{OSM-class}} this function searches for specific element IDs and 
   builds a new OSM Object with these new elements.
 }
 \usage{
-  findID.OSM(x, ID, full = FALSE, what = "", check = TRUE)
+  findID(x, ID, full = FALSE, what = "", check = TRUE)
 }
 
 \arguments{
@@ -17,10 +17,11 @@
   \item{full}{logical; if \command{FALSE} only the given IDs will be subsetted; 
               if \command{TRUE} every member referenced in \command{ID} and existing in \command{x} will be subsetted.
               \command{what} has to be specified.}
-  \item{what}{character string: if "way" the full way will be subsetted and if "relation" the full
-              relation will be subsetted.}
-  \item{check}{logical: if \command{TRUE} a check will be made if all referencend members are in \command{x}
-                and a message appears.}
+  \item{what}{character string: if \code{\dQuote{way}} the full way will be 
+              subsetted and if \code{\dQuote{relation}} the full relation will
+              be subsetted. \command{full} has to be \command{TRUE}.}
+  \item{check}{logical: if \command{TRUE} a check will be made if all referencend 
+               members are in \command{x} and a message appears.}
 }
 \details{
   This function combines the three generic function \command{findID.[Node|Way|Relation]}. So there is
@@ -37,10 +38,7 @@
   in combination with \code{\link{getOSMObject}} to get the full data. 
 }
 \value{object of type \code{\link{OSM-class}}}
-\references{}
 \author{Thomas Schlesinger}
-\note{}
-
 \seealso{
   \code{\link{OSM-class}}
   \code{\link{getElementXML}}
@@ -49,37 +47,27 @@
   \code{\link{findTime}}
 }
 \examples{
+  \dontrun{
   xml<-getBboxXML(bbox2coords(c(11.579341,48.15102),c(500,500)), URL=TRUE)
   osm<-getOSMObject(xml, reduced=TRUE) 
   ##simple
   oneway<-findID(osm, c("100024927"))
-  summary(oneway$Way)$noWay
+  summary(oneway$Way)$number
   
   moreway<-findID(osm, c("93192031","17969172","80392625"))
-  summary(moreway$Way)$noWay
+  summary(moreway$Way)$number
   
   onerelation<-findID(osm, c("1619276"))
-  summary(onerelation$Relation)$noRelation
+  summary(onerelation$Relation)$number
   
   morerelation<-findID(osm, c("1619276", "1619275", "64019"))
-  summary(morerelation$Relation)$noRelation
+  summary(morerelation$Relation)$number
   
   mixed<-findID(osm, c("100024927","1619276","1318876598"))
-  summary(mixed$Node)$noNode
-  summary(mixed$Way)$noWay
-  summary(mixed$Relation)$noRelation
+  summary(mixed)$number
   
   ##full
   fullrelation<-findID(osm, c("207678"), full=TRUE, what="relation")
-    #25 (of 26) nodes are missing
-    #68 (of 77) ways are missing
-    #0 (of 1) relations are missing
-  
   fullway<-findID(osm, c("80175400"), full=TRUE, what="way")
-    #0 (of 6) nodes are missing
-    #0 (of 1) ways are missing     
+  }     
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
