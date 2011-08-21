@@ -18,13 +18,13 @@
 \details{
   Basically this function searches through the Node, Way and Relation objects in \command{x}
   and finds the IDs with the given \command{key} and/or \command{value}.
-  Then the IDs are given to \code{\link{findID}} and an \code{\link{OSM-class}} is build.
+  Then the IDs are given to \code{\link{findID.OSM}} and an \code{\link{OSM-class}} is build.
   Very similar to \code{\link{findTime}}.  
 }
 \value{object of type \code{\link{OSM-class}}}
 \author{Thomas Schlesinger}
 \seealso{
-  \code{\link{findID}}
+  \code{\link{findID.OSM}}
   \code{\link{findTime}}
 }
 \examples{

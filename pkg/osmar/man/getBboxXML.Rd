@@ -4,16 +4,17 @@
   getting OSM-Box-XML
 }
 \description{
-  This function uses the OpenStreetMap API v0.6 to get Data from a rectangle area defined by a bounding box.
-  The area is defined by latitude & longitude values.
+  This function uses the OpenStreetMap API v0.6 to get Data from a rectangle area
+  defined by a bounding box. The area is defined by latitude & longitude values.
 }
 \usage{
   getBboxXML(coords, URL = FALSE)
 }
 \arguments{
   \item{coords}{
-    numeric vector of length four which contains edges of the bounding box in decimal latitude and longitude values.
-    the form has to be c(east longitude, south latitude, west longitude, north latitude). 
+    numeric vector of length four which contains edges of the bounding box in 
+    decimal latitude and longitude values. The form has to be 
+    \code{c(east longitude, south latitude, west longitude, north latitude)}. 
   }
   \item{URL}{
     logical. TRUE prints the http request in RConsole
@@ -21,8 +22,8 @@
 }
 \details{
   The HTTP-Request has this form "http://api.openstreetmap.org/api/0.6/map?bbox=left,bottom,right,top"
-  and can be typed in your typical browser window, too. In R it is handles by the \code{\link{getURL}}-function.
-  The result will have a "UTF-8" character encoding.
+  and can be typed in your browser window, too. In R it is handled by the \code{\link{getURL}}-function.
+  The result will have a \sQuote{UTF-8} character encoding.
   
   The returned XML-File contains: (1)nodes in the given bbox, (2)ways that reference BboxNodes,
    (3) nodes that are referenced in the ways but NOT in the bbox and (4) all relations that reference one 
@@ -36,7 +37,7 @@
   Furthermore the returned XMLDocument won't have the first Tag with XML-Version and encoding. 
 }
 \value{
-  returns an object of class "XMLInternalElementNode" 
+  returns an object of class \sQuote{XMLInternalElementNode} 
 }
 \references{
   \url{http://wiki.openstreetmap.org/wiki/API_v0.6#Retrieving_map_data_by_bounding_box:_GET_.2Fapi.2F0.6.2Fmap}
@@ -49,14 +50,13 @@ Thomas Schlesinger
   you need a working internet connection while using this function.
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
 \seealso{
   \code{\link{getURL}}
   \code{\link{bbox2coords}}
   \code{\link{getOSMObject}}
 }
 \examples{
+  \dontrun{
   coords<-c(11.580341,48.15102,11.582852,48.1530)
   XMLRaw<-getBboxXML(coords, URL=TRUE)
   XMLRaw
@@ -72,8 +72,5 @@ Thomas Schlesinger
   getBboxXML(c(10,40,12,50))
   #Bad Request
   #The maximum bbox size is 0.25, and your request was too large. Either request a smaller area, or use planet.osm  
+  }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

@@ -17,7 +17,7 @@
 }
 \details{formulas for converting meter to geographical coordinates are used 
          from this webpage \url{http://bse.unl.edu/adamchuk/web_ssm/web_GPS_eq.html}
-         (16)-19).
+         (16)-(19).
          }
 \value{
   a vector of length 4 giving the edges of the described area in the form:

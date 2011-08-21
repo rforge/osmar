@@ -1,4 +1,4 @@
-\name{findID}
+\name{findID.OSM}
 \alias{findID}
 \alias{findID.OSM}
 \title{subset of a specific ID}
@@ -7,7 +7,7 @@
   builds a new OSM Object with these new elements.
 }
 \usage{
-  findID(x, ID, full = FALSE, what = "", check = TRUE)
+  findID.OSM(x, ID, full = FALSE, what = "", check = TRUE)
 }
 
 \arguments{
@@ -17,8 +17,8 @@
   \item{full}{logical; if \command{FALSE} only the given IDs will be subsetted; 
               if \command{TRUE} every member referenced in \command{ID} and existing in \command{x} will be subsetted.
               \command{what} has to be specified.}
-  \item{what}{character string: if \code{\dQuote{way}} the full way will be 
-              subsetted and if \code{\dQuote{relation}} the full relation will
+  \item{what}{character string: if \code{"way"} the full way will be 
+              subsetted and if \code{"relation"} the full relation will
               be subsetted. \command{full} has to be \command{TRUE}.}
   \item{check}{logical: if \command{TRUE} a check will be made if all referencend 
                members are in \command{x} and a message appears.}

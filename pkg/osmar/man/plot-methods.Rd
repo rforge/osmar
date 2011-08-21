@@ -4,12 +4,12 @@
 \alias{plot.Node}
 \alias{plot.Way}
 
-%- Also NEED an '\alias' for EACH other topic documented here.
+
 \title{
   Plotting Object of osmar-package
 }
 \description{
-  
+  methods for Plotting objects of the osmar-package.   
 }
 \usage{
   \method{plot}{Node}(x, pch=20, data="no", ptcol="red",...)
@@ -20,11 +20,12 @@
 \arguments{
   \item{x}{Object of \code{\link{Node-class}}, \code{\link{Way-class}} or \code{\link{OSM-class}}}
   \item{pch}{point character code for Nodes. see \code{\link{points}}}
-  \item{data}{three options: (1) "no"= all Nodes will be plotted, 
-                (2) "yes"= Nodes with additional data will be marked with pch=8 and col="red"
-                (3) "only"= only Nodes with data will be plotted}
+  \item{data}{three options: (1) \code{"no"}= all Nodes will be plotted, 
+                (2) \code{"yes"}= Nodes with additional data will be marked with 
+                    \code{pch=8} and \code{col="red"}
+                (3) \code{"only"}= only Nodes with data will be plotted}
   \item{nodes}{Nodes with additional data will be marked}
-  \item{ptcol}{color for Nodes with additional data.}
+  \item{ptcol}{color for Nodes with additional data}
   \item{\dots}{Arguments to be passed to plot-methods}
 }
 \details{
@@ -37,22 +38,11 @@
 \value{
   plot window with graphics
 }
-\references{
-%% ~put references to the literature/web site here ~
-}
 \author{
   Thomas Schlesinger
 }
-\note{
-%%  ~~further notes~~
-}
-
-%% ~Make other sections like Warning with \section{Warning }{....} ~
-
-\seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
-}
 \examples{
+  \dontrun{
   xml<-getBboxXML(bbox2coords(c(11.581262,48.150626),c(500,500)), URL=TRUE)
   uni<-getOSMObject(xml, reduced=TRUE)    ##11.03
   uni2<-getOSMObject(xml, reduced=FALSE)  ##7.53
@@ -69,8 +59,5 @@
   
   plot(uni$Way)
   plot(uni$Relation)
+  }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
