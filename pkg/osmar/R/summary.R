@@ -3,11 +3,14 @@ summary.Node<- function(object,...){
   ret<-list(number=numeric())
   ret$number<-c(total=numeric(1), withData=numeric(1))
   
-  if(is.character(x[[2]])==FALSE){  
-    ret$number[1]   <-summary(x[[2]])$npoints
-    ret$Bbox   <-summary(x[[2]])$bbox
-    ret$times    <-c(oldest=min(x[[2]]$timestamp), newest=max(x[[2]]$timestamp))
-    ret$topUser <-summary(x[[2]]$user)[order(summary(x[[2]]$user), decreasing=TRUE)]
+  if(is.character(x[[2]])==FALSE){ 
+    temp<-summary(x[[2]]) 
+    ret$number[1]   <-temp$npoints
+    ret$Bbox   <-temp$bbox
+    temp<-summary(x[[2]]$timestamp) 
+    ret$times    <-c(oldest=min(temp), newest=max(temp))
+    temp<-summary(x[[2]]$user)
+    ret$topUser <-temp[order(temp, decreasing=TRUE)]
   } else {ret$number[1]<-0}
   if(is.character(x[[1]])==FALSE){
     ret$number[2]       <- length(x[[1]]$id[!duplicated(x[[1]]$id)])
@@ -15,7 +18,7 @@ summary.Node<- function(object,...){
     ret$building    <- extractValues("building",x[[1]])
     ret$railway     <- extractValues("railway", x[[1]])    
     ret$place       <- extractValues("place", x[[1]])
-    ret$allValue    <-extractValuesAll(x[[1]], c("railway", "amenity", "place", "building"))
+    ret$allValue    <- extractValuesAll(x[[1]], c("railway", "amenity", "place", "building"))
   } else {ret$number[2] <-0}
   class(ret)<-"summary.Node"
   ret
@@ -30,8 +33,11 @@ summary.Way<- function(object,...){
     ret$number[1]      <-nrow(x[[2]])
     if(class(x[[2]])[1]=="SpatialLinesDataFrame")
       ret$Bbox   <-summary(x[[2]])$bbox
-    ret$times    <-c(oldest=min(x[[2]]$timestamp), newest=max(x[[2]]$timestamp))
-    ret$topUser <-summary(x[[2]]$user)[order(summary(x[[2]]$user), decreasing=TRUE)]
+    temp<-summary(x[[2]]$timestamp) 
+    ret$times    <-c(oldest=min(temp), newest=max(temp))
+    temp<-summary(x[[2]]$user)
+    ret$topUser <-temp[order(temp, decreasing=TRUE)]
+
   } else {ret$number[1]<-0}
   if(is.character(x[[1]])==FALSE){
     ret$number[2] <- length(unique(x[[1]]$id))
@@ -61,8 +67,10 @@ summary.Relation<- function(object,...){
   
   if(is.character(x[[1]])==FALSE){
     ret$number[1]   <-nrow(x[[1]])
-    ret$times   <-c(oldest=min(x[[1]]$timestamp), newest=max(x[[1]]$timestamp))
-    ret$topUser <-summary(x[[1]]$user)[order(summary(x[[1]]$user), decreasing=TRUE)]
+    temp<-summary(x[[1]]$timestamp) 
+    ret$times    <-c(oldest=min(temp), newest=max(temp))
+    temp<-summary(x[[1]]$user)
+    ret$topUser <-temp[order(temp, decreasing=TRUE)]
   }else{ret$number[1]<-0}
   
   if(is.character(x[[2]])==FALSE){

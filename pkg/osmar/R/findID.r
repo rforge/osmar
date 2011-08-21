@@ -3,7 +3,7 @@ findID<- function(x,...){
 }
 #ID<-c("847979776","789659585","935274956"  ,"935275014","2")
 
-findID.Node <- function(x, ID){
+findID.Node <- function(x, ID, ...){
   stopifnot(is.character(ID))
   stopifnot(class(x)[1] =="Node")
   ID<-unique(ID)
@@ -28,7 +28,7 @@ findID.Node <- function(x, ID){
   ret
 }
 
-findID.Way <- function(x, ID){
+findID.Way <- function(x, ID,...){
   stopifnot(is.character(ID))
   ID<-unique(ID) 
      
@@ -66,14 +66,18 @@ findID.Way <- function(x, ID){
   }
 }
 
-findID.Relation <- function(x, ID){
+findID.Relation <- function(x, ID,...){
   stopifnot(is.character(ID))
   ID<-unique(ID) 
-  if(is.character(x[[1]])) return("no Relations in this Object")
+  if(is.character(x[[1]]))
+    return(Relation("no elements of type relation recorded",
+                    "no data of relation elements recorded",
+                    "no elements of type relation recorded"))
   ID<- ID[ID %in% x[[1]]$id]
-  if(length(ID)==0) return(Relation("no elements of type relation recorded", "no data of relation elements recorded",
-                                    "no elements of type relation recorded"))
-
+  if(length(ID)==0) 
+    return(Relation("no elements of type relation recorded",
+                    "no data of relation elements recorded",
+                    "no elements of type relation recorded"))
   relationMeta<-x[[1]][ID,]
   factorCols<-names(relationMeta)[sapply(relationMeta, is.factor)]
   relationMeta[,factorCols] <- droplevels(relationMeta[,factorCols])  
@@ -86,7 +90,7 @@ findID.Relation <- function(x, ID){
   return(Relation(relationMeta, relationData, relationMember))
 }
 
-findID.OSM<- function(x, ID, full=FALSE, what="", check=TRUE){
+findID.OSM<- function(x, ID, full=FALSE, what="", check=TRUE,...){
   if(full==FALSE){
     node<-findID(x$Node, ID)
     way <-findID(x$Way, ID)

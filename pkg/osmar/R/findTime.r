@@ -17,9 +17,9 @@ findTime<- function(x, time="", what="", time2=""){
   }
   if(what=="between"){
     stopifnot(class(time2)[1] %in% c("POSIXlt", "POSIXct"))
-    nodeIDs     <- subset(x$Node[[2]]@data, timestamp>time & timestamp<time2)$id
-    wayIDs      <- subset(x$Way[[2]]@data, timestamp>time & timestamp<time2)$id
-    relationIDs <- subset(x$Relation[[1]], timestamp>time & timestamp<time2)$id
+    nodeIDs     <- subset(x$Node[[2]]@data, timestamp>=time & timestamp<time2)$id
+    wayIDs      <- subset(x$Way[[2]]@data, timestamp>=time & timestamp<time2)$id
+    relationIDs <- subset(x$Relation[[1]], timestamp>=time & timestamp<time2)$id
     return(findID(x, c(nodeIDs, wayIDs, relationIDs)))
   }
 }
