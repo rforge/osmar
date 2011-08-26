@@ -42,7 +42,7 @@
   (2) HTTP status code 410 (Gone): If the element has been deleted 
   In both cases the Function will give a warning message called \code{"empty response"}.
   
-  Licence of downloaded data: \copyright \osm{} \& Contrib, CC-BY-SA
+  Licence of downloaded data: Copyright OpenStreetMap & Contrib, CC-BY-SA
 }
 \value{
   returns an object of class \sQuote{XMLInternalElementNode} 

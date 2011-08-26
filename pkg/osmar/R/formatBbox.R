@@ -17,25 +17,25 @@ function(x, borders){
     return(ret)
     
   } else{
-    Bounds<- bounds(x)                                  # 0
+    Bounds<- bounds(x)                                  
     boundspath<-paste("//node[@lon>=\"", Bounds["minlon"], "\" and @lat>=\"", Bounds["minlat"],
                   "\" and @lon<=\"", Bounds["maxlon"] , "\" and @lat<=\"", Bounds["maxlat"] ,"\"]", sep="") 
     
-    bboxnodes<-getNodeSet(x, path=boundspath)                             # 0.61
+    bboxnodes<-getNodeSet(x, path=boundspath)                             
     attr(bboxnodes, "element")<-"node"
-    bboxnodesID<-getElementsID(bboxnodes)                                 # 0.59
+    bboxnodesID<-getElementsID(bboxnodes)                                 
     
-    bboxways<-gWay(x)                                                     # 0
-    bboxwaysID<-getElementsID(bboxways)                                   # 0.12
+    bboxways<-gWay(x)                                                     
+    bboxwaysID<-getElementsID(bboxways)                                   
     
     bboxnoderelations<-getNodeSet(x, path=id2path(c(bboxwaysID,bboxnodesID), operator="or"))
-        ## relations, in denen bboxnodes vorkommen                        #78.31
+        ## relations, in denen bboxnodes vorkommen                       
     bboxwayrelations<-getNodeSet(x, path=id2path(bboxwaysID, operator="or"))
-        ## relations, in denen bboxways vorkommen                         #16.04 
+        ## relations, in denen bboxways vorkommen                          
     bboxrelationsID<-unlist(c(getElementsID(bboxwayrelations), getElementsID(bboxnoderelations)))
           ## unlist falls eins leer ist                                   
     bboxrelationsID<-bboxrelationsID[!duplicated(bboxrelationsID)]
-    bboxrelationrelations<-getNodeSet(x, path=id2path(bboxrelationsID, operator="or")) #0.84
+    bboxrelationrelations<-getNodeSet(x, path=id2path(bboxrelationsID, operator="or")) 
     bboxrelationsID<-c(bboxrelationsID, getElementsID(bboxrelationrelations))
     bboxrelations<-c( bboxwayrelations,bboxnoderelations,bboxrelationrelations)
     bboxrelations<-bboxrelations[!duplicated(bboxrelations)]
@@ -46,6 +46,3 @@ function(x, borders){
     return(ret)
   }
 }
-
-  # zeiten für 
-  # x<-getBboxXML(bbox2coords(c(11.579341,48.15102),c(1500,1500)), URL=TRUE)

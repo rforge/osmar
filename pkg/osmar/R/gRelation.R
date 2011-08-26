@@ -5,4 +5,3 @@ function(x){
   attr(ret, "element") <- "relation"
   ret
 }
-

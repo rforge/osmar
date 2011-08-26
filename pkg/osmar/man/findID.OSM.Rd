@@ -50,7 +50,7 @@
   \dontrun{
   xml<-getBboxXML(bbox2coords(c(11.579341,48.15102),c(500,500)), URL=TRUE)
   osm<-getOSMObject(xml, reduced=TRUE) 
-  ##simple
+      ##simple
   oneway<-findID(osm, c("100024927"))
   summary(oneway$Way)$number
   

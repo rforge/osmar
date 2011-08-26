@@ -4,4 +4,3 @@ function(XML){
   ret<-sapply(XML, xmlGetAttr, "id")
   ret
 }
-

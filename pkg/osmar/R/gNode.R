@@ -5,4 +5,3 @@ function(x){
   attr(ret, "element") <- "node"
   ret
 }
-

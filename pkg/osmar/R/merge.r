@@ -98,37 +98,3 @@ merge.OSM<- function(x,y,...){
   relation<-do.call("merge", lapply(z, function(k) k$Relation))
   return(OSM(node,way,relation))
 }
-
-##mergen
-#xmlhed<-getBboxXML(bbox2coords(c(11.543387,48.164253),c(1500,1500)), URL=TRUE)
-#xmlnord<-getBboxXML(bbox2coords(c(11.563404,48.160733),c(1500,1500)), URL=TRUE)
-#xmlleo<-getBboxXML(bbox2coords(c(11.549284,48.15787),c(1500,1500)), URL=TRUE)
-#hed<-getOSMObject(xmlhed, reduced=FALSE)
-#nord<-getOSMObject(xmlnord, reduced=FALSE)
-#leo<-getOSMObject(xmlleo, reduced=FALSE)
-#
-#hednd<-hed$Node
-#nordnd<-nord$Node
-#leond<-leo$Node
-#hedway<-hed$Way
-#nordway<-nord$Way
-#leoway<-leo$Way
-#hedrel<-hed$Relation
-#nordrel<-nord$Relation
-#leorel<-leo$Relation
-#
-#merge(hed,leo,nord)->muc
-#plot(muc)
-#  six<-strptime("2006.01.01", format="%Y.%m.%d")
-#  ten<-strptime("2011.01.01", format="%Y.%m.%d")
-#  elev<-strptime("2011.07.10", format="%Y.%m.%d")
-#  years<-c(seq(from=six, to=ten, length=6),as.POSIXct(elev))
-#  year<-vector("list",6)
-#  for(i in 1:6)
-#    year[[i]]<-findTime(muc, time=years[i], time2=years[i+1], what="between")
-#  plot(muc, col="grey")
-#  for(i in 6:1)
-#    plot(year[[i]]$Node, add=TRUE, col=i, cex=0.7)
-#  legend(legend=years[1:6], x="topright", fill=1:6, cex=1)
-#
-#

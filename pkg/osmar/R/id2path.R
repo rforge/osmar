@@ -10,8 +10,6 @@ function(ID, element="relation", operator){
   if(element=="way"){
     if(operator=="and") operator<-"]andnd["
     ret<- paste("//way[nd[@ref=\"",paste(ID,collapse=paste(c("\"",operator,"@ref=\""),collapse="")),"\"]]",sep="" )
-    ##              //way[nd[@ref=      "ID1" and|or @ref= "ID2" and|or .... IDx"]]
     return(ret)
   }
 }
-

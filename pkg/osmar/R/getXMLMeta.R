@@ -20,14 +20,5 @@ function(XML){
     ret$lon<- as.numeric(as.character(ret$lon))
   }
   class(ret)<-c(paste(c(eltype,"Meta"), collapse=""), class(ret))      
-  #attr(ret, "datatype")<-"meta"
   ret
 }
-
-
-# coords<-c(11.579341,48.15102,11.582852,48.1530)
-# xml<-getBboxXML(coords, URL=TRUE)
-# bbox<-formatBbox(xml, borders=TRUE)
-#  getXMLMeta(bbox[["bboxnodes"]])
-#
-

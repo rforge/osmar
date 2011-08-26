@@ -113,14 +113,3 @@ summary.OSM <- function(object,...){
   class(ret)<-"summary.OSM"
   ret
 }
-
-#xml2<-getBboxXML(bbox2coords(c(11.580809,48.15086),c(2000,2000)), URL=TRUE)
-#StatRed2<-getOSMObject(xml2, reduced=FALSE)   ##76.33
-#y<-StatRed2
-#
-#summary(y$Node)
-#summary(y$Way)
-#summary(y$Relation)
-#summary(y)
-##
-#

@@ -44,15 +44,15 @@
 \examples{
   \dontrun{
   xml<-getBboxXML(bbox2coords(c(11.581262,48.150626),c(500,500)), URL=TRUE)
-  uni<-getOSMObject(xml, reduced=TRUE)    ##11.03
-  uni2<-getOSMObject(xml, reduced=FALSE)  ##7.53
+  uni<-getOSMObject(xml, reduced=TRUE) 
+  uni2<-getOSMObject(xml, reduced=FALSE) 
   
   plot(uni, nodes=TRUE)
   plot(uni, nodes=FALSE)
   plot(uni2, nodes=TRUE)
   plot(uni2,nodes=FALSE)  
   op<-par(mfrow=c(2,2))
-    plot(uni$Node)
+    plot(uni$Node)            
     plot(uni$Node, data="yes")
     plot(uni$Node, data="only")
   par(op)

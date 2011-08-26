@@ -1,6 +1,5 @@
 requiredValues <-
 function(XML, eltype){
-    ## gibt benötigte ElementXML für data.frames zurück
   stopifnot("XMLNodeSet" %in% class(XML)| "list" %in% class(XML))
   if(eltype=="node"){
     ret<- XML[which(sapply(XML,xmlSize)!=0)]

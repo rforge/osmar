@@ -1,4 +1,4 @@
-\name{bbox2coords}
+\name{bbox2coords}         
 \alias{bbox2coords}
 
 \title{Converting defined area to bounding box}
@@ -10,10 +10,10 @@
 
 \arguments{
   \item{center}{needs a vector of length two giving the center of the area in 
-                the form c(longitude, latitude). Only accapting the decimal format.
+                the form \command{c(longitude, latitude)}. Only accapting the decimal format.
                 }
   \item{area}{needs a vector of length two giving the width & height of the 
-              rectangle area in the form c(width, height). The unit is meter.}
+              rectangle area in the form \command{c(width, height)}. The unit is meter.}
 }
 \details{formulas for converting meter to geographical coordinates are used 
          from this webpage \url{http://bse.unl.edu/adamchuk/web_ssm/web_GPS_eq.html}
@@ -21,7 +21,7 @@
          }
 \value{
   a vector of length 4 giving the edges of the described area in the form:
-  c(east longitude, south latitude, west longitude, north latitude). all in decimal format.
+  \code{c(east longitude, south latitude, west longitude, north latitude)}. all in decimal format.
 }
 \references{
   using the formulas in this webpage:

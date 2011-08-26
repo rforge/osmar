@@ -23,20 +23,3 @@ findTime<- function(x, time="", what="", time2=""){
     return(findID(x, c(nodeIDs, wayIDs, relationIDs)))
   }
 }
-
-#xml2<-getBboxXML(bbox2coords(c(11.579341,48.15102),c(500,500)), URL=TRUE)
-#StatRed2<-getOSMObject(xml2, reduced=TRUE)   ##9.59
-#y<-StatRed2
-#thisyear<-strptime("2011.01.01", format="%Y.%m.%d")
-#oneone<-findTime(x, time=thisyear, "older")
-#plot(x, nodes=FALSE)
-#plot(oneone$Node, col=2, add=TRUE)
-#plot(oneone$Way,col=2, add=TRUE)
-#
-#june1<-strptime("2011.06.01", format="%Y.%m.%d")
-#june2<-strptime("2011.06.30", format="%Y.%m.%d")
-#juneosm<-findTime(y, time=june1, "between", time2=june2)
-#plot(y, nodes=FALSE)
-#plot(juneosm$Node, col=2, add=TRUE)
-#plot(juneosm$Way,col=2, add=TRUE)
-

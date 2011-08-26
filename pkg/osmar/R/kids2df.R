@@ -15,4 +15,3 @@ function(XML, dfType){
     ret[colnames[i]]<-xmlSApply(XML, xmlGetAttr, colnames[i])
   ret
 }
-

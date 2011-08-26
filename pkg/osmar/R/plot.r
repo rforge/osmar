@@ -37,28 +37,3 @@ plot.OSM<-function(x, nodes=FALSE, ptcol="red",...){
     plot(x$Node, data="no",...)
   }
 }
-
-
-#xml<-getBboxXML(bbox2coords(c(11.581262,48.150626),c(500,500)), URL=TRUE)
-#uni<-getOSMObject(xml, reduced=TRUE)    ##11.03
-#uni2<-getOSMObject(xml, reduced=FALSE)  ##7.53
-
-#plot(uni)
-#plot(uni, nodes=FALSE)
-#plot(uni2)
-#plot(uni2,nodes=FALSE)  
-#op<-par(mfrow=c(2,2))
-#  plot(uni$Node)
-#  plot(uni$Node, data="yes")
-#  plot(uni$Node, data="only")
-#par(op)
-#
-#plot(uni$Way)
-#plot(uni$Relation)
-#
-#findID(uni2, "1396537", full=TRUE, what="relation")
-#
-#getElementXML("1396537", "relation", full=TRUE)->egarten
-#egart<-getOSMObject(egarten)
-#findID(egart, "1396537", full=TRUE, what="relation", check=TRUE) ##passt
-#

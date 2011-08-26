@@ -36,7 +36,7 @@
   
   Furthermore the returned XMLDocument won't have the first Tag with XML-Version and encoding. 
   
-  Licence of downloaded data: \copyright \osm{} \& Contrib, CC-BY-SA
+  Licence of downloaded data: Copyright OpenStreetMap & Contrib, CC-BY-SA
 }
 \value{
   returns an object of class \sQuote{XMLInternalElementNode} 

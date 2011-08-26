@@ -27,4 +27,3 @@ function(center, area){
   names(ret)<- c("minlon", "minlat", "maxlon", "maxlat") 
   ret  
 }
-

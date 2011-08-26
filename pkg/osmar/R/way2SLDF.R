@@ -1,8 +1,5 @@
 way2SLDF <-
 function(XML, nodedata, crs=CRS("+init=epsg:4326")){
-    ##  XML = Ways im Format einer list oder XMLNodeSet. Jedes Listenelement muss eine XMLNode sein.
-    ##  nodedata  = im Format, so dass row.names die ID der node sind und eine lat und lon Spalte vorhanden sind.
-    ##  crs = Angabe eines anderern CoordinateReferenceSystems
 
   stopifnot("XMLNodeSet" %in% class(XML)| "list" %in% class(XML))
   stopifnot(attr(XML, "element")=="way")

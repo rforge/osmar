@@ -12,7 +12,5 @@ function(XML){
     return(paste("no data of", eltype, "elements recorded", collapse=""))
   ret<-do.call("rbind", lapply(values, kids2df, "data"))
   class(ret)<-c(paste(c(eltype,"DataFrame"), collapse=""), class(ret))
-  #attr(ret, "datatype")<-"data"
   ret  
 }
-

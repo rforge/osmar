@@ -65,9 +65,9 @@
   xml1<-getBboxXML(coords, URL=TRUE)
   xml2<-getBboxXML(bbox2coords(c(11.579341,48.15102),c(200,200)), URL=TRUE)
   StatRed1<-getOSMObject(xml1, reduced=TRUE)
-  StatRed2<-getOSMObject(xml2, reduced=TRUE)   ##7.86
+  StatRed2<-getOSMObject(xml2, reduced=TRUE)  
   StatUnRed1<-getOSMObject(xml1, reduced=FALSE)
-  StatUnRed2<-getOSMObject(xml2, reduced=FALSE)##5.03
+  StatUnRed2<-getOSMObject(xml2, reduced=FALSE)
   op<-par(mfrow=c(2,2))
     plot(StatRed1)
     plot(StatRed2)
@@ -91,7 +91,7 @@
   
   nodefull<-getElementXML("789659585", "node", TRUE)
   nfosm<-getOSMObject(nodefull, reduced=FALSE)
-  Not RUN : nfosm<-getOSMObject(nodefull, reduced=TRUE)
+    ## Error-Code: nfosm<-getOSMObject(nodefull, reduced=TRUE)
   plot(nfosm)
   node<-getElementXML("789659585", "node", FALSE)
   nosm<-getOSMObject(node, reduced=FALSE)

@@ -7,4 +7,3 @@ function(x){
   names(ret)<-names(xmlAttrs(temp[[1]]))
   ret
 }
-

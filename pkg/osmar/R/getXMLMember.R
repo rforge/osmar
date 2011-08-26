@@ -10,7 +10,5 @@ function(XML){
   ret<-do.call("rbind", lapply(values, kids2df, "member"))
   
   class(ret)<-c(paste(c(eltype,"Member"), collapse=""), class(ret))      
-  #attr(ret, "datatype")<-"member"
   ret
 }
-
