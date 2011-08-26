@@ -6,7 +6,7 @@
   Given a \code{\link{OSM-class}} this function searches for specific elements with given
   key or value and builds a new OSM Object with these new elements.
 }
-\usage{findKeyValue(x, key = "", value = "")}
+\usage{findKeyValue(x, key = "", value = "", found = TRUE)}
 
 \arguments{
   \item{x}{Object of \code{\link{OSM-class}}}
@@ -14,6 +14,7 @@
               in combination with \command{value}}
   \item{value}{character matching the value to be extracted. It can be given alone or
               in combination with\command{key}}
+  \item{found}{logical; if \command{TRUE} displays the found IDs}
 }
 \details{
   Basically this function searches through the Node, Way and Relation objects in \command{x}

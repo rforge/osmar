@@ -55,7 +55,7 @@ merge.Way <- function(x,y,...){
   
   firstNotChar<-which(sapply(z, function(k) class(k[[1]])[1])!="character")
   if(length(firstNotChar)!=0){
-    wayData<-do.call("merge", lapply(z, function(k) k[[1]]))
+    wayData<-do.call("merge", lapply(z[firstNotChar], function(k) k[[1]]))
   } else{wayData<-"no data of way elements recorded"}
   
   waySP<-do.call("merge", lapply(z, function(k) k[[2]]))

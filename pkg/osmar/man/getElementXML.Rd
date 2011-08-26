@@ -41,6 +41,8 @@
   (1) HTTP status code 404 (Not Found): When no element with the given id could be found
   (2) HTTP status code 410 (Gone): If the element has been deleted 
   In both cases the Function will give a warning message called \code{"empty response"}.
+  
+  Licence of downloaded data: \copyright \osm{} \& Contrib, CC-BY-SA
 }
 \value{
   returns an object of class \sQuote{XMLInternalElementNode} 

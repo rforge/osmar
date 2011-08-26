@@ -35,6 +35,8 @@
   and (2) HTTP status code 509 (Bandwidth Limit Exceeded): When you have downloaded too much data.
   
   Furthermore the returned XMLDocument won't have the first Tag with XML-Version and encoding. 
+  
+  Licence of downloaded data: \copyright \osm{} \& Contrib, CC-BY-SA
 }
 \value{
   returns an object of class \sQuote{XMLInternalElementNode} 

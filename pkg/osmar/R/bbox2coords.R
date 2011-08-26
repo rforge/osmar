@@ -1,22 +1,20 @@
 bbox2coords <-
 function(center, area){
-    ##  center  = Vektor Länge 2 in der Form c(lon, lat) c(x,y)
-    ##  area    = breite und länge der bbox c(breite, höhe)
   stopifnot(center[1]<=180 & center[1]>=-180)
   stopifnot(center[2]<=90 & center[2]>=-90)
   stopifnot(length(c(center,area))==4)
+  center<-as.numeric(center)
   lon<-center[1]
   lat<-center[2]
   width<- area[1]/2
   height<-area[2]/2
-  ## Formeln direkt aus der Quelle übernommen
   a<-6378137
   esq<-(2-(1/298.257223563))*(1/298.257223563)
   W<-sqrt(1- esq*(sin(lat*pi/180))^2)
   
   M<-a*(1-esq)/W^3
   mPerLatD<-1/ ((pi/180)*M)
-  top<-lat+ mPerLatD*height              ## abstand zwischen 2 breitengraden hat 111km
+  top<-lat+ mPerLatD*height   
   bottom<-lat- mPerLatD*height
 
   N<-a/W
