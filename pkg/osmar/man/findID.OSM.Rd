@@ -7,7 +7,7 @@
   builds a new OSM Object with these new elements.
 }
 \usage{
-  findID.OSM(x, ID, full = FALSE, what = "", check = TRUE)
+  findID.OSM(x, ID, full = FALSE, what = "", check = TRUE, ...)
 }
 
 \arguments{
@@ -22,6 +22,7 @@
               be subsetted. \command{full} has to be \command{TRUE}.}
   \item{check}{logical: if \command{TRUE} a check will be made if all referencend 
                members are in \command{x} and a message appears.}
+  \item{...}{\ldots{}}
 }
 \details{
   This function combines the three generic function \command{findID.[Node|Way|Relation]}. So there is
