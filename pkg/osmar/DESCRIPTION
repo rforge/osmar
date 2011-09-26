@@ -1,7 +1,7 @@
 Package: osmar
 Type: Package
 Title: Importing and working with OpenStreetMap-Data
-Version: 1.0
+Version: 1.0-01
 Date: 2011-08-30
 Author: Thomas Schlesinger and Manuel Eugster
 Maintainer: Thomas Schlesinger <tho.schlesinger@googlemail.com>
