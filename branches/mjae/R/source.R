@@ -9,8 +9,16 @@ get_osm_data <- function(source, ...) {
 }
 
 
-setOldClass(c("api", "osmosis"))
-setOldClass(c("bbox"))
+setOldClass("api")
+setOldClass("osmosis")
+setOldClass("bbox")
+setOldClass("element")
+setOldClass("node")
+setOldClass("way")
+setOldClass("relation")
+setIs("node", "element")
+setIs("way", "element")
+setIs("relation", "element")
 
 setGeneric("osm_request",
 function(source, what, ...) {

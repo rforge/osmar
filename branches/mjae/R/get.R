@@ -3,15 +3,20 @@
 
 
 get_osm <- function(x, source = osmsource_api(), ...) {
-  get_osm_data(source, x, ...)
+  raw <- get_osm_data(source, x, ...)
+
+  xml <- xmlParse(raw)
+
+  #as.osm(xml)
 }
 
 
 
 ### Bounding box: ####################################################
 
-bbox <- function(west_lon, south_lat, east_lon, north_lat) {
-  structure(c(west_lon, south_lat, east_lon, north_lat), class = "bbox")
+bbox <- function(left, bottom, right, top) {
+  structure(c(left = left, bottom = bottom,
+              right = right, top = top), class = "bbox")
 }
 
 
@@ -19,8 +24,9 @@ size <- function(x, ...) {
   UseMethod("size")
 }
 
+
 size.bbox <- function(x) {
-  (x[1] - x[3]) * (x[2] - x[4])
+  unname((x[1] - x[3]) * (x[2] - x[4]))
 }
 
 
@@ -43,11 +49,32 @@ center_bbox <- function(center_lon, center_lat, width, heigth) {
   left <- lon - mPerLonD * width
   right <- lon + mPerLonD * width
 
-  if (left < -180) 
+  if (left < -180)
     left <- left + 360
-  if (right > 180) 
+  if (right > 180)
     right <- right - 360
 
   bbox(left, bottom, right, top)
 }
+
+
+
+### Element: #########################################################
+
+element <- function(id, subclass) {
+  structure(c(id = id), class = c(subclass, "element"))
+}
+
+node <- function(id) {
+  element(id, "node")
+}
+
+way <- function(id) {
+  element(id, "way")
+}
+
+relation <- function(id) {
+  element(id, "relation")
+}
+
 

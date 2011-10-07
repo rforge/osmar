@@ -13,3 +13,4 @@ Description: This package imports the (Spatial and Non-Spatial) Data
 Depends: XML, RCurl, sp, gtools
 License: GPL-2
 LazyLoad: yes
+URL: http://osmar.r-forge.r-project.org/
