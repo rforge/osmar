@@ -1,3 +1,5 @@
+###setwd("D:/R_packages/osmar/branches/mjae/sandbox")
+###  ist nur damit ich das nicht immer neu eintippen muss ;)
 
 source("source.R")
 
@@ -30,3 +32,8 @@ osmosis
 
 xml2 <- get_osm(box, source = osmosis)
 
+
+##vorläufiges as.osm
+
+temp<- as.osm(xml1)
+str(temp)
