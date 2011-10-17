@@ -36,7 +36,7 @@ xml2long <- function(x, dfType){
   if(dfType=="data")
     colnames<-c("k", "v")
   if(dfType=="member")
-    names(xmlAttrs(xmlChildren(XML)[[1]]))->colnames
+    colnames<-names(xmlAttrs(xmlChildren(x)[[1]]))
 
   ret[colnames]<-character(size)
   for(i in 1:length(colnames))
