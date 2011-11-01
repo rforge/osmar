@@ -2,7 +2,7 @@
 {}
 
 
-get_osm <- function(x, source = osmsource_api(), osmar=TRUE ...) {
+get_osm <- function(x, source = osmsource_api(), osmar=TRUE, ...) {
   raw <- get_osm_data(source, x, ...)
 
   xml <- xmlParse(raw)
