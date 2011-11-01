@@ -11,6 +11,9 @@ extract_data.osm_parsed <- function(parsed){
 
 extract_data.node_parsed <- function(nparsed){
   values<-nparsed$elements[which(sapply(nparsed$elements,xmlSize)!=0)]
+  ##auswahl der nodes MIT daten
+  if(length(values)==0) 
+    return(data.frame(id=character(), k=character(), v=character()))
   do.call("rbind", lapply(values, xml2long, "data"))
 }
 
@@ -18,6 +21,8 @@ extract_data.way_parsed <- function(wparsed){
   XMLclone<- lapply(wparsed$elements, xmlClone)
   XMLclone<- removeKids(XMLclone, "nd")
   XMLclone<- XMLclone[which(sapply(XMLclone, xmlSize)!=0)]
+  if(length(XMLclone)==0) 
+    return(data.frame(id=character(), k=character(), v=character()))
   do.call("rbind", lapply(XMLclone, xml2long, "data"))
 }
 
@@ -25,6 +30,8 @@ extract_data.relation_parsed <- function(rparsed){
   XMLclone<- lapply(rparsed$elements, xmlClone)
   XMLclone<- removeKids(XMLclone, "member")
   XMLclone<- XMLclone[which(sapply(XMLclone,xmlSize)!=0)]
+  if(length(XMLclone)==0) 
+    return(data.frame(id=character(), k=character(), v=character()))
   do.call("rbind", lapply(XMLclone, xml2long, "data"))
 }
 

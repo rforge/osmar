@@ -1,41 +1,11 @@
-Node<- function(...){
-  x<-list(...)
-  stopifnot(length(x)==3)
-  stopifnot(any(class(x[[1]]) %in% c("nodeDataFrame", "character")))
-  stopifnot(any(class(x[[2]]) %in% c("SpatialPointsDataFrame", "character")))
-  
-  class(x)<-c("Node", class(x))
-  x
+osmar_classes<- function(obj, element){
+  stopifnot(all(sapply(obj, class)=="data.frame"))
+  structure(obj, class = c(element, "OSM"))
 }
 
-Way<- function(...){
-  x<-list(...)
-  stopifnot(length(x)==3)
-  stopifnot(any(class(x[[1]]) %in% c("wayDataFrame", "character")))
-  stopifnot(any(class(x[[2]]) %in% c("SpatialLinesDataFrame","wayMeta", "character")))
-  stopifnot(any(class(x[[3]]) %in% c("wayMember", "character")))
-  class(x)<-c("Way", class(x))
-  x
+OSM<- function(obj){
+  stopifnot(length(obj)==3)
+  stopifnot(sapply(obj, function(k) class(k)[1])==c("NODE", "WAY", "RELATION"))
+  structure(list(NODE=obj[[1]], WAY=obj[[2]], RELATION=obj[[3]]), class="OSM")
 }
 
-Relation<- function(...){
-  x<-list(...)
-  stopifnot(length(x)==3)
-  stopifnot(any(class(x[[1]]) %in% c("relationMeta", "character")))
-  stopifnot(any(class(x[[2]]) %in% c("relationDataFrame", "character")))
-  stopifnot(any(class(x[[3]]) %in% c("relationMember", "character")))
-  class(x) <- c("Relation", class(x))
-  x
-}
-
-OSM <-
-function(...){
-  x <- list(...)
-  stopifnot(length(x)==3)
-  stopifnot("Node" %in% class(x[[1]]))
-  stopifnot("Way" %in% class(x[[2]]))
-  stopifnot("Relation" %in% class(x[[3]]))
-  names(x)<-c("Node","Way","Relation")
-  class(x)<-c("OSM", class(x))
-  x
-}

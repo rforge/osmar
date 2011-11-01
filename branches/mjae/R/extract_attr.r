@@ -11,6 +11,10 @@ extract_attr.osm_parsed <- function(parsed){
 
 extract_attr.node_parsed<- function(elparsed){
   ret <- lapply(elparsed$elements, xmlAttrs)
+  if(length(ret)==0)
+    return(data.frame(id=character(), visible=character(), timestamp=character(),
+            version=character(), changeset=character(), user=character(),
+            uid=character(), lat=numeric(), lon=numeric()))  
   if(any(sapply(ret, length)!=9)){
     ret<-as.data.frame(do.call("smartbind", ret))
   } else{
@@ -25,6 +29,10 @@ extract_attr.node_parsed<- function(elparsed){
 extract_attr.way_parsed<-
 extract_attr.relation_parsed <- function(elparsed){
   ret <- lapply(elparsed$elements, xmlAttrs)
+  if(length(ret)==0)
+    return(data.frame(id=character(), visible=character(), timestamp=character(),
+            version=character(), changeset=character(), user=character(),
+            uid=character()))  
   if(any(sapply(ret, length)!=7)){
     ret<-as.data.frame(do.call("smartbind", ret))
   } else{
