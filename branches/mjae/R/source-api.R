@@ -3,6 +3,18 @@
 {}
 
 
+
+#' API OSM data source
+#'
+#' OSM API version 0.6  data source; this source just supports to
+#' the basic request elements (see \code{\link{get_osm_elements}}).
+#'
+#' @param url URL of the API
+#'
+#' @seealso \code{\link{get_osm}}, \code{\link{get_osm_elements}}
+#' @family osmsource
+#'
+#' @export
 osmsource_api <- function(url = "http://api.openstreetmap.org/api/0.6/") {
   osmsource(list(url = url), "api")
 }

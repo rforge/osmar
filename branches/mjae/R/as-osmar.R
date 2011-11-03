@@ -54,9 +54,32 @@ osmar_class <- function(obj) {
 
 
 
-as.osmar <- function(xml, ...) {
-  osm_parsed <- osm_parse(xmlRoot(xml)) 
-  
+#' Convert OSM-XML to an osmar object
+#'
+#' Convert a given OSM-XML object (as parsed by
+#' \code{\link[XML]{xmlParse}}) to an osmar object.
+#'
+#' @param xml An OSM-XML object
+#'
+#' @return
+#'   A list (with class attribute \code{osmar}) with three elements:
+#'
+#'   \describe{
+#'
+#'     \item{\code{node}}{...}
+#'
+#'     \item{\code{way}}{...}
+#'
+#'     \item{\code{relation}}{...}
+#'
+#'   }
+#'
+#' @aliases osmar
+#'
+#' @export
+as.osmar <- function(xml) {
+  osm_parsed <- osm_parse(xmlRoot(xml))
+
   osm_data <- extract_data(osm_parsed)
   osm_attr <- extract_attr(osm_parsed)
   osm_ref <- extract_ref(osm_parsed)
@@ -69,7 +92,7 @@ as.osmar <- function(xml, ...) {
   osmar$way <- osmar_elemclass(list(osm_attr$wayattr,
                                     osm_data$waydata,
                                     osm_ref$wayref), "way")
-  
+
   osmar$relation <- osmar_elemclass(list(osm_attr$relationattr,
                                          osm_data$relationdata,
                                          osm_ref$relationref), "relation")

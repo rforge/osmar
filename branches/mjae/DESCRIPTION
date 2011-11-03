@@ -4,13 +4,30 @@ Title: OpenStreetMap and R
 Version: 1.1-0
 Date: 2011-09-29
 Author: Thomas Schlesinger and Manuel J. A. Eugster
-Maintainer: Thomas Schlesinger <tho.schlesinger@googlemail.com>
-Description: This package imports the (Spatial and Non-Spatial) Data
-  of OpenStreetMap into objects of R by using the OSM-API v0.6. For now
-  it is reduced on using various commands of type "GET", like getting
-  data of an explicit element or a region defined by coordinates. It
-  also includes some methods on working with the newly created objects.
-Depends: XML, RCurl, sp, gtools
+Maintainer: Thomas Schlesinger
+    <tho.schlesinger@googlemail.com>
+Description: This package imports the (Spatial and
+    Non-Spatial) Data of OpenStreetMap into objects of R by
+    using the OSM-API v0.6. For now it is reduced on using
+    various commands of type "GET", like getting data of an
+    explicit element or a region defined by coordinates. It
+    also includes some methods on working with the newly
+    created objects.
+Depends:
+    methods,
+    XML,
+    RCurl,
+    sp,
+    gtools
 License: GPL-2
 LazyLoad: yes
 URL: http://osmar.r-forge.r-project.org/
+Build-dep: roxygen2
+Collate:
+    'as-osmar-elements.R'
+    'as-osmar.R'
+    'source.R'
+    'get.R'
+    'osmar.R'
+    'source-api.R'
+    'source-osmosis.R'

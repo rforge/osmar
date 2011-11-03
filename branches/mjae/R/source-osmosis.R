@@ -3,6 +3,30 @@
 {}
 
 
+
+#' Osmosis OSM data source
+#'
+#' Planet dumps as OSM data source through the osmosis command line
+#' Java application.
+#'
+#' Osmosis is a command line Java application for processing OSM
+#' data. It allows, among other things, to extract data inside a
+#' bounding box or polygon from so called planet dumps. The usage of
+#' this source requires an installed osmosis; see
+#' \url{http://wiki.openstreetmap.org/wiki/Osmosis}.
+#'
+#' @section Additional supported request elements:
+#' \describe{
+#'   \item{osmosis_args}{...}
+#' }
+#'
+#' @param file The file name (and path) to the planet dump
+#' @param osmosis The path to the osmosis application
+#'
+#' @seealso \code{\link{get_osm}}, \code{\link{get_osm_elements}}
+#' @family osmsource
+#'
+#' @export
 osmsource_osmosis <- function(file, osmosis = "osmosis") {
   osmsource(list(file = file, osmosis = osmosis), "osmosis")
 }
