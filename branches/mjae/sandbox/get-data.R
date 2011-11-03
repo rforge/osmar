@@ -35,8 +35,8 @@ xml2 <- get_osm(box, source = osmosis)
 
 ##vorläufiges as.osm
 
-temp<- as.osm(xml1)
-str(temp)
+#temp <- as.osmar(xml1)
+#str(temp)
 
-temp2<- as.osm(kaufstr)
-temp2
+#temp2<- as.osm(kaufstr)
+#temp2

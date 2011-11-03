@@ -1,13 +1,19 @@
 #' @include source.R
+#' @include as-osmar.R 
 {}
 
 
-get_osm <- function(x, source = osmsource_api(), osmar=TRUE, ...) {
+
+#' @export
+get_osm <- function(x, source = osmsource_api(), osmar = TRUE, ...) {
   raw <- get_osm_data(source, x, ...)
 
   xml <- xmlParse(raw)
 
-  if(osmar) osmar<- as.osmar(xml)
+  if ( osmar )
+    xml <- as.osmar(xml)
+
+  xml
 }
 
 
