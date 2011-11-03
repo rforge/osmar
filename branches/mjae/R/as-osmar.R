@@ -1,4 +1,5 @@
 #' @include as-osmar-elements.R
+{}
 
 
 
