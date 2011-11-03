@@ -10,8 +10,12 @@ get_osm <- function(x, source = osmsource_api(), osmar = TRUE, ...) {
 
   xml <- xmlParse(raw)
 
-  if ( osmar )
-    xml <- as.osmar(xml)
+  if ( !osmar )
+    return(xml)
+  
+  xml <- as.osmar(xml)
+  attr(xml, "bbox") <- x
+  #attr(xml, "source") <- as.character(source)
 
   xml
 }

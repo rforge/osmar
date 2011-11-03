@@ -4,6 +4,7 @@
 source("source.R")
 
 
+
 box <- bbox(11.579341, 48.15102, 11.582852, 48.1530)
 box
 size(box)
@@ -33,10 +34,8 @@ osmosis
 xml2 <- get_osm(box, source = osmosis)
 
 
-##vorläufiges as.osm
 
-#temp <- as.osmar(xml1)
-#str(temp)
+### Working with osmar objects:
 
-#temp2<- as.osm(kaufstr)
-#temp2
+xml1
+summary(xml1)
