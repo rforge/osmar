@@ -39,7 +39,7 @@
 \description{
   Utility functions to specify \emph{what} to get from the
   OSM data source. These are the request elements which
-  work for every source, see the specific sources for
+  work for most sources, see the specific sources for
   specialized elements.
 }
 \seealso{

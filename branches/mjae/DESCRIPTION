@@ -31,3 +31,4 @@ Collate:
     'osmar.R'
     'source-api.R'
     'source-osmosis.R'
+    'source-file.R'

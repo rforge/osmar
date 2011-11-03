@@ -36,7 +36,7 @@ get_osm <- function(x, source = osmsource_api(), ...) {
   xml <- xmlParse(raw)
   xml <- as.osmar(xml)
   attr(xml, "identifier") <- x
-  #attr(xml, "source") <- as.character(source)
+  attr(xml, "source") <- source
 
   xml
 }
@@ -49,7 +49,7 @@ get_osm <- function(x, source = osmsource_api(), ...) {
 #' Get OSM elements
 #'
 #' Utility functions to specify \emph{what} to get from the OSM data
-#' source. These are the request elements which work for every source,
+#' source. These are the request elements which work for most sources,
 #' see the specific sources for specialized elements.
 #'
 #' @param left Minimum longitude

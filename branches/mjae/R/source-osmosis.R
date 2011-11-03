@@ -15,12 +15,18 @@
 #' this source requires an installed osmosis; see
 #' \url{http://wiki.openstreetmap.org/wiki/Osmosis}.
 #'
-#' @section Additional supported request elements:
+#' @section Supported request elements:
+#'
 #' \describe{
+#'
+#'   \item{Basic request elements}{See
+#'     \code{\link{get_osm_elements}}.}
+#'
 #'   \item{osmosis_args}{...}
+#'
 #' }
 #'
-#' @param file The file name (and path) to the planet dump
+#' @param file The file name (and path) of the planet dump
 #' @param osmosis The path to the osmosis application
 #'
 #' @seealso \code{\link{get_osm}}, \code{\link{get_osm_elements}}
@@ -32,6 +38,7 @@ osmsource_osmosis <- function(file, osmosis = "osmosis") {
 }
 
 
+
 get_osm_data.osmosis <- function(source, what, ...) {
   destination <- tempfile()
 
@@ -39,8 +46,11 @@ get_osm_data.osmosis <- function(source, what, ...) {
   ret <- system(request, ...)
   response <- readLines(destination)
 
+  unlink(destination)
+
   response
 }
+
 
 
 setMethod("osm_request", signature = c("osmosis", "bbox"),
@@ -72,7 +82,7 @@ function(source, what, ...) {
 
 
 
-### Special omsosis requester:
+### Special omsosis requester: #######################################
 
 setOldClass(c("osmosis_args"))
 
