@@ -38,6 +38,13 @@ osm_parse <- function(x) {
 
 ### OSMAR object construction: #######################################
 
+NODES_CLASS <- "nodes"
+WAYS_CLASS <- "ways"
+RELATIONS_CLASS <- "relations"
+OSMAR_CLASS <- "osmar"
+
+
+
 osmar_elemclass <- function(obj, subclass) {
   stopifnot(all(sapply(obj, class) == "data.frame"))
   subclass(obj, c(subclass, "osmar_element"))
@@ -50,7 +57,7 @@ osmar_class <- function(obj) {
   #stopifnot(sapply(obj,
   # function(k) class(k)[1])==c("NODE", "WAY", "RELATION"))
 
-  subclass(obj, "osmar")
+  subclass(obj, OSMAR_CLASS)
 }
 
 
@@ -90,16 +97,19 @@ as_osmar <- function(xml) {
 
   osmar <- list()
 
-  osmar$node <- osmar_elemclass(list(osm_attr$nodeattr,
-                                     osm_data$nodedata), "node")
+  osmar$nodes <- osmar_elemclass(list(attrs = osm_attr$nodeattr,
+                                      tags = osm_data$nodedata),
+                                 NODES_CLASS)
 
-  osmar$way <- osmar_elemclass(list(osm_attr$wayattr,
-                                    osm_data$waydata,
-                                    osm_ref$wayref), "way")
+  osmar$ways <- osmar_elemclass(list(attrs = osm_attr$wayattr,
+                                     tags = osm_data$waydata,
+                                     refs = osm_ref$wayref),
+                                WAYS_CLASS)
 
-  osmar$relation <- osmar_elemclass(list(osm_attr$relationattr,
-                                         osm_data$relationdata,
-                                         osm_ref$relationref), "relation")
+  osmar$relations <- osmar_elemclass(list(attrs = osm_attr$relationattr,
+                                          tags = osm_data$relationdata,
+                                          refs = osm_ref$relationref),
+                                     RELATIONS_CLASS)
 
   osmar_class(osmar)
 }
