@@ -33,12 +33,12 @@
 get_osm <- function(x, source = osmsource_api(), ...) {
   raw <- get_osm_data(source, x, ...)
 
-  xml <- xmlParse(raw)
-  xml <- as.osmar(xml)
-  attr(xml, "identifier") <- x
-  attr(xml, "source") <- source
+  ret <- xmlParse(raw)
+  ret <- as_osmar(ret)
+  attr(ret, "identifier") <- x
+  attr(ret, "source") <- source
 
-  xml
+  ret
 }
 
 

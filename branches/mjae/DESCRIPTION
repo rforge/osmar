@@ -19,6 +19,8 @@ Depends:
     RCurl,
     sp,
     gtools
+Suggests:
+    igraph
 License: GPL-2
 LazyLoad: yes
 URL: http://osmar.r-forge.r-project.org/
@@ -32,3 +34,6 @@ Collate:
     'source-api.R'
     'source-osmosis.R'
     'source-file.R'
+    'as-igraph.R'
+    'as-osm.R'
+    'as-sp.R'

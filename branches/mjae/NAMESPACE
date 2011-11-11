@@ -1,4 +1,7 @@
-export(as.osmar)
+export(as_igraph)
+export(as_osm)
+export(as_osmar)
+export(as_sp)
 export(bbox)
 export(center_bbox)
 export(complete_file)

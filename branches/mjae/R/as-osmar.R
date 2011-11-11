@@ -55,6 +55,7 @@ osmar_class <- function(obj) {
 
 
 
+
 #' Convert OSM-XML to an osmar object
 #'
 #' Convert a given OSM-XML object (as parsed by
@@ -78,7 +79,9 @@ osmar_class <- function(obj) {
 #' @aliases osmar
 #'
 #' @export
-as.osmar <- function(xml) {
+as_osmar <- function(xml) {
+  #stopifnot(osm_check(xml))
+
   osm_parsed <- osm_parse(xmlRoot(xml))
 
   osm_data <- extract_data(osm_parsed)
@@ -100,4 +103,5 @@ as.osmar <- function(xml) {
 
   osmar_class(osmar)
 }
+
 
