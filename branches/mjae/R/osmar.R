@@ -30,6 +30,24 @@ summary.osmar <- function(object, ...) {
 
 
 
+### Finding and subsetting methods: ##################################
+
+attrs <- function(condition) {
+  structure(substitute(condition), what = "attrs")
+}
+
+tags <- function(condition) {
+  structure(substitute(condition), what = "tags")
+}
+
+refs <- function(condition) {
+  structure(substitute(condition), what = "refs")
+}
+
+
+
+
+
 find_node <- function(object, ...) {
   UseMethod("find_node")
 }
@@ -38,14 +56,15 @@ find_node.osmar <- function(object, ...) {
   find_node.nodes(object$nodes, ...)
 }
 
-find_node.nodes <- function(object, condition, by = c("attrs", "tags")) {
-  by <- match.arg(by)
-  condition <- substitute(condition)
+find_node.nodes <- function(object, condition) {
+  stopifnot(class(condition) == "call")
+  stopifnot(attr(condition, "what") %in% c("attrs", "tags"))
 
-  id <- subset(object[[by]], eval(condition), select = id)$id
+  what <- attr(condition, "what")
+  id <- subset(object[[what]], eval(condition), select = id)$id
 
   if ( length(id) == 0 )
-    id <- NA_character_
+    id <- as.numeric(NA)
 
   id
 }
@@ -60,14 +79,15 @@ find_way.osmar <- function(object, ...) {
   find_way.ways(object$ways, ...)
 }
 
-find_way.ways <- function(object, condition, by = c("attrs", "tags", "refs")) {
-  by <- match.arg(by)
-  condition <- substitute(condition)
+find_way.ways <- function(object, condition) {
+  stopifnot(class(condition) == "call")
+  stopifnot(attr(condition, "what") %in% c("attrs", "tags", "refs"))
 
-  id <- subset(object[[by]], eval(condition), select = id)$id
+  what <- attr(condition, "what")
+  id <- subset(object[[what]], eval(condition), select = id)$id
 
   if ( length(id) == 0 )
-    id <- NA_character_
+    id <- as.numeric(NA)
 
   id
 }
@@ -82,22 +102,22 @@ find_relation.osmar <- function(object, ...) {
   find_relation.relations(object$relations, ...)
 }
 
-find_relation.relations <- function(relations, condition,
-                                    by = c("attrs", "tags", "refs")) {
-  by <- match.arg(by)
-  condition <- substitute(condition)
+find_relation.relations <- function(relations, condition) {
+  stopifnot(class(condition) == "call")
+  stopifnot(attr(condition, "what") %in% c("attrs", "tags", "refs"))
 
-  id <- subset(relations[[by]], eval(condition), select = id)$id
+  what <- attr(condition, "what")
+  id <- subset(object[[what]], eval(condition), select = id)$id
 
   if ( length(id) == 0 )
-    id <- NA_character_
+    id <- numeric(NA)
 
   id
 }
 
 
 
-subset_by_nodes <- function(x, ids) {
+subset_by_nodes <- function(x, id) {
 
 }
 
