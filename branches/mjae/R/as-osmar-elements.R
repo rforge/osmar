@@ -71,7 +71,7 @@ extract_attr.way_parsed <- function(elparsed){
   ret$version<- as.numeric(as.character(ret$version))
   ret$uid<- as.numeric(as.character(ret$uid))
   ret$user<- as.factor(as.character(ret$user))
-  ret$changeset<- as.factor(as.character(ret$changeset))
+  ret$changeset<- as.numeric(as.character(ret$changeset))
 
   ret
 }
