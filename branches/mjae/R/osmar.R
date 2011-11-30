@@ -2,11 +2,10 @@
 
 #' @S3method print osmar
 print.osmar <- function(x, ...) {
-  id <- attr(x, "identifier")
-  what <- class(id)[1]
+  elem_obs <- sapply(x, function(y) nrow(y[[1]]))
 
-  cat("osmar object by ", what, ":\n", sep = "")
-  cat(paste(names(id), "=", round(id, 2), collapse = ", "), "\n")
+  cat("osmar object\n")
+  cat(paste(elem_obs, " ", names(elem_obs), sep = "", collapse = ", "), "\n")
 
   invisible(x)
 }
@@ -15,17 +14,7 @@ print.osmar <- function(x, ...) {
 
 #' @S3method summary osmar
 summary.osmar <- function(object, ...) {
-  ## TODO: change to print.summary.osmar
-
-  elem_obs <- lapply(object, function(x) nrow(x[[1]]))
-  elem_obs <- as.data.frame(elem_obs)
-  rownames(elem_obs) <- "Elements"
-
-  print(object)
-  cat("\n")
-  print(elem_obs)
-
-  invisible(object)
+  warning("Not yet implemented!")
 }
 
 
@@ -141,7 +130,7 @@ find_way_complete <- function(object, ids = NULL) {
 
 #' @export
 find_relation_complete <- function(object, ids = NULL) {
-  ## @TODO: check if relation id is in object
+  ## TODO: check if relation id is in object
 
   refs <- subset_relations(object$relations, ids)$refs
 
@@ -216,16 +205,39 @@ subset.osmar <- function(x, node_ids = NULL, way_ids = NULL, relation_ids = NULL
 
 ### Combining methods: ###############################################
 
+#' S3method c osmar
 c.osmar <- function(...) {
+  ## TODO: object[[1]] attributes?
   objects <- list(...)
 
-  stopifnot(all(sapply(objects, class) == "osmar"))
+  stopifnot(all("osmar" %in% sapply(objects, class)))
 
+  c_parts <- function(w1, w2) {
+    do.call(rbind, lapply(objects, "[[", c(w1, w2)))
+  }
 
+  objects[[1]]$nodes$attrs <- c_parts("nodes", "attrs")
+  objects[[1]]$nodes$tags <- c_parts("nodes", "tags")
+
+  objects[[1]]$ways$attrs <- c_parts("ways", "attrs")
+  objects[[1]]$ways$tags <- c_parts("ways", "tags")
+  objects[[1]]$ways$refs <- c_parts("ways", "refs")
+
+  objects[[1]]$relations$attrs <- c_parts("relations", "attrs")
+  objects[[1]]$relations$tags <- c_parts("relations", "tags")
+  objects[[1]]$relations$refs <- c_parts("relations", "refs")
+
+  objects[[1]]
 }
 
 
 
 ### Plotting methods: ################################################
+
+
+
+
+
+
 
 
