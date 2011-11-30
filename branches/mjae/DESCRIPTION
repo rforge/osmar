@@ -18,7 +18,8 @@ Depends:
     XML,
     RCurl,
     sp,
-    gtools
+    gtools,
+    geosphere
 Suggests:
     igraph
 License: GPL-2

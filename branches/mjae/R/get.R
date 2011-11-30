@@ -121,35 +121,53 @@ size.bbox <- function(x) {
 ### Element: #########################################################
 
 element <- function(id, subclass) {
-  structure(c(id = id), class = c(subclass, "element"))
+  structure(c(id = id), class = c(subclass, "element"), element = subclass)
 }
 
 
 
-#' @param id OSM ID
-#' @rdname get_osm_elements
-#'
 #' @export
-node <- function(id) {
-  element(id, "node")
+node <- function(object, ...) {
+  UseMethod("node")
+}
+
+#' @param object OSM ID
+#' @rdname get_osm_elements
+#' @method node default
+#'
+#' @S3method node default
+node.default <- function(object) {
+  element(object, "node")
 }
 
 
 
-#' @rdname get_osm_elements
-#'
 #' @export
-way <- function(id) {
-  element(id, "way")
+way <- function(object, ...) {
+  UseMethod("way")
+}
+
+#' @rdname get_osm_elements
+#' @method way default
+#'
+#' @S3method way default
+way.default <- function(object) {
+  element(object, "way")
 }
 
 
 
-#' @rdname get_osm_elements
-#'
 #' @export
-relation <- function(id) {
-  element(id, "relation")
+relation <- function(object, ...) {
+  UseMethod("relation")
+}
+
+#' @rdname get_osm_elements
+#' @method relation default
+#'
+#' @S3method relation default
+relation.default <- function(object) {
+  element(object, "relation")
 }
 
 

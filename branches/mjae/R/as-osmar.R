@@ -61,6 +61,14 @@ osmar_class <- function(obj) {
 }
 
 
+is_osmar <- function(obj) {
+  OSMAR_CLASS %in% class(obj)
+}
+
+are_osmar <- function(objs) {
+  all(OSMAR_CLASS %in% sapply(objs, class))
+}
+
 
 
 #' Convert OSM-XML to an osmar object
