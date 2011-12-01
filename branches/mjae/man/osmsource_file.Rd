@@ -4,6 +4,8 @@
 \title{OSM file data source}
 \usage{
   osmsource_file(file)
+
+  complete_file()
 }
 \arguments{
   \item{file}{The file name (and path) of the osm file}
@@ -20,8 +22,8 @@
 }
 \examples{
 \dontrun{
-get_osm(complete_file(), source = osmsource_file("muc.osm"))
-}
+  get_osm(complete_file(), source = osmsource_file("muc.osm"))
+  }
 }
 \seealso{
   \code{\link{get_osm}}, \code{\link{get_osm_elements}}

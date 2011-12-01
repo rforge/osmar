@@ -2,20 +2,20 @@
 \alias{bbox}
 \alias{center_bbox}
 \alias{get_osm_elements}
-\alias{node}
-\alias{relation}
-\alias{way}
+\alias{node.default}
+\alias{relation.default}
+\alias{way.default}
 \title{Get OSM elements}
 \usage{
   bbox(left, bottom, right, top)
 
   center_bbox(center_lon, center_lat, width, height)
 
-  node(id)
+  \method{node}{default} (object)
 
-  way(id)
+  \method{way}{default} (object)
 
-  relation(id)
+  \method{relation}{default} (object)
 }
 \arguments{
   \item{left}{Minimum longitude}
@@ -34,7 +34,7 @@
 
   \item{height}{Box height}
 
-  \item{id}{OSM ID}
+  \item{object}{OSM ID}
 }
 \description{
   Utility functions to specify \emph{what} to get from the

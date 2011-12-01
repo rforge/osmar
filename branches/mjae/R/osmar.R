@@ -37,17 +37,17 @@ refs <- function(condition) {
 }
 
 
-#' @S3method node call
+#' @S3method node list
 node.list <- function(object) {
   structure(object, element = "node")
 }
 
-#' @S3method node call
+#' @S3method way list
 way.list <- function(object) {
   structure(object, element = "way")
 }
 
-#' @S3method node call
+#' @S3method relation list
 relation.list <- function(object) {
   structure(object, element = "relation")
 }
@@ -205,7 +205,8 @@ find_relation_complete <- function(object, ids = NULL) {
 ### Subsetting methods: ##############################################
 
 subset_nodes <- function(x, ids) {
-  x$attrs <- subset(x$attrs, id %in% ids)
+  #x$attrs <- subset(x$attrs, id %in% ids)     # Subet should be in order of the ids
+  x$attrs <- x$attrs[match(ids, x$attrs$id), ]
   x$attrs$user <- x$attrs$user[, drop = TRUE]
 
   x$tags <- subset(x$tags, id %in% ids)
@@ -261,7 +262,7 @@ subset.osmar <- function(x, node_ids = NULL, way_ids = NULL, relation_ids = NULL
 
 ### Combining methods: ###############################################
 
-#' S3method c osmar
+#' @S3method c osmar
 c.osmar <- function(...) {
   ## TODO: object[[1]] attributes?
   objects <- list(...)

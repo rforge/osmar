@@ -2,8 +2,7 @@
 \alias{osmsource_api}
 \title{API OSM data source}
 \usage{
-  osmsource_api(url =
-  "http://api.openstreetmap.org/api/0.6/")
+  osmsource_api(url = "http://api.openstreetmap.org/api/0.6/")
 }
 \arguments{
   \item{url}{URL of the API}
