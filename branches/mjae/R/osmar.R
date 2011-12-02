@@ -133,7 +133,7 @@ find_relation.relations <- function(relations, condition) {
 
 ### Find complete osmar object:
 
-#'
+#' find_down
 #' @details
 #'   node     -> node
 #'   way      -> way + node
@@ -175,7 +175,7 @@ find_down_relation <- function(object, ids = NULL) {
   way_ids <- subset(refs, type == "way")$ref
   node_ids <- subset(refs, type == "node")$ref
 
-  ret <- find_way_complete(object, way_ids)
+  ret <- find_down_way(object, way_ids)
   ret$node_ids <- c(ret$node_ids, node_ids)
   ret$relation_ids <- ids
 
@@ -184,7 +184,7 @@ find_down_relation <- function(object, ids = NULL) {
 
 
 
-#'
+#' find_up
 #' @details
 #'   node     -> node + way + relation
 #'   way      -> way + relation
