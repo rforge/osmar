@@ -1,3 +1,7 @@
+#' @include osmar.R
+{}
+
+
 
 #' Convert osmar object to igraph
 #'
@@ -15,23 +19,7 @@ as_igraph <- function(obj) {
   stopifnot(is_osmar(obj))
   stopifnot(require("igraph"))
 
-  my_merge <- function(ways, nodes) {
-    colnames(ways) <- sprintf("w%s", colnames(ways))
-    colnames(nodes) <- sprintf("n%s", colnames(nodes))
-
-    m <- match(ways$wref, nodes$nid)
-
-    dat <- cbind(ways, nodes[m, ])
-    dat <- na.omit(dat)
-
-    dat$nid <- NULL
-    colnames(dat) <- substring(colnames(dat), 2)
-
-    dat
-  }
-
-
-  dat <- my_merge(obj$ways[[3]], obj$nodes[[1]])
+  dat <- merge_ways_nodes(obj$ways[[3]], obj$nodes[[1]])
   dat <- split(dat, dat$id)
   dat <- dat[sapply(dat, nrow) >= 2]
 

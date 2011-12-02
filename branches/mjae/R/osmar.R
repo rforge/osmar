@@ -131,49 +131,32 @@ find_relation.relations <- function(relations, condition) {
 
 
 
-### Find nearest node with given conditions:
-
-#' @export
-find_node_nearest <- function(object, id, condition) {
-  stopifnot(is_osmar(object))
-
-  node <- subset_nodes(object$nodes, id)
-
-  element <- attr(condition, "element")
-
-  cand_ids <- find(object, condition)
-  cand_ids <- do.call(element, list(cand_ids))
-  cand_ids <- find_complete(object, cand_ids)
-  cand_nodes <- subset_nodes(object$nodes, cand_ids$node_ids)
-
-  dist <- distm(node$attrs[, c("lon", "lat")],
-                cand_nodes$attrs[, c("lon", "lat")])
-
-  cand_nodes$attrs[which.min(dist), "id"]
-}
-
-
-
 ### Find complete osmar object:
 
+#'
+#' @details
+#'   node     -> node
+#'   way      -> way + node
+#'   relation -> relation + way + node
+#'
 #' @export
-find_complete <- function(object, ids) {
+find_down <- function(object, ids) {
   stopifnot(is_osmar(object))
 
-  handler <- sprintf("find_%s_complete", attr(ids, "element"))
+  handler <- sprintf("find_down_%s", attr(ids, "element"))
   do.call(handler, list(object, as.vector(ids)))
 }
 
 
 
-find_node_complete <- function(object, ids = NULL) {
+find_down_node <- function(object, ids = NULL) {
   stopifnot(is_osmar(object))
   list(node_ids = ids, way_ids = NULL, relation_ids = NULL)
 }
 
 
 
-find_way_complete <- function(object, ids = NULL) {
+find_down_way <- function(object, ids = NULL) {
   ## TODO: check if way id is in object
   stopifnot(is_osmar(object))
 
@@ -183,7 +166,7 @@ find_way_complete <- function(object, ids = NULL) {
 
 
 
-find_relation_complete <- function(object, ids = NULL) {
+find_down_relation <- function(object, ids = NULL) {
   ## TODO: check if relation id is in object
   stopifnot(is_osmar(object))
 
@@ -199,6 +182,67 @@ find_relation_complete <- function(object, ids = NULL) {
   ret
 }
 
+
+
+#'
+#' @details
+#'   node     -> node + way + relation
+#'   way      -> way + relation
+#'   relation -> relation
+#'
+#' @export
+find_up <- function(object, ids) {
+  stopifnot(is_osmar(object))
+
+  handler <- sprintf("find_up_%s", attr(ids, "element"))
+  do.call(handler, list(object, as.vector(ids)))
+}
+
+
+
+find_up_node <- function(object, ids = NULL) {
+  way_ids <- subset(object$ways$refs, ref %in% ids)$id
+  rel_ids <- subset(object$relations$refs, type == "node" & ref %in% ids)$id
+
+  list(node_ids = ids, way_ids = way_ids, relation_ids = rel_ids)
+}
+
+
+
+find_up_way <- function(object, ids = NULL) {
+  rel_ids <- subset(object$relations$refs, type == "way" & ref %in% ids)$id
+  list(node_ids = NULL, way_ids = ids, relation_ids = rel_ids)
+}
+
+
+
+find_up_relation <- function(object, ids = NULL) {
+  stopifnot(is_osmar(object))
+  list(node_ids = NULL, way_ids = NULL, relation_ids = ids)
+}
+
+
+
+### Find nearest node with given conditions:
+
+#' @export
+find_nearest_node <- function(object, id, condition) {
+  stopifnot(is_osmar(object))
+
+  node <- subset_nodes(object$nodes, id)
+
+  element <- attr(condition, "element")
+
+  cand_ids <- find(object, condition)
+  cand_ids <- do.call(element, list(cand_ids))
+  cand_ids <- find_down(object, cand_ids)
+  cand_nodes <- subset_nodes(object$nodes, cand_ids$node_ids)
+
+  dist <- distm(node$attrs[, c("lon", "lat")],
+                cand_nodes$attrs[, c("lon", "lat")])
+
+  cand_nodes$attrs[which.min(dist), "id"]
+}
 
 
 
@@ -291,6 +335,23 @@ c.osmar <- function(...) {
 
 ### Plotting methods: ################################################
 
+merge_ways_nodes <- function(ways, nodes) {
+  colnames(ways) <- sprintf("w%s", colnames(ways))
+  colnames(nodes) <- sprintf("n%s", colnames(nodes))
+
+  m <- match(ways$wref, nodes$nid)
+
+  dat <- cbind(ways, nodes[m, ])
+  dat <- na.omit(dat)
+
+  dat$nid <- NULL
+  colnames(dat) <- substring(colnames(dat), 2)
+
+  dat
+}
+
+
+
 #' @export
 plot_nodes <- function(object, add = FALSE, ...) {
   stopifnot(is_osmar(object))
@@ -309,8 +370,7 @@ plot_nodes <- function(object, add = FALSE, ...) {
 plot_ways <- function(object, add = FALSE, xlab = "lat", ylab = "lon", ...) {
   stopifnot(is_osmar(object))
 
-  dat <- merge(object$ways[[3]], object$nodes[[1]],
-                by.x = "ref", by.y = "id", sort = FALSE, all.x = TRUE)
+  dat <- merge_ways_nodes(object$ways[[3]], object$nodes[[1]])
 
   rlat <- range(dat$lat, na.rm = TRUE)
   rlon <- range(dat$lon, na.rm = TRUE)
