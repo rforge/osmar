@@ -1,3 +1,5 @@
+#' @include osm-descriptors.R
+{}
 
 
 

@@ -10,9 +10,7 @@
 #'
 #' @param obj An \code{\link{osmar}} object
 #'
-#' @return An igraph \code{graph} object
-#'
-#' @note Not yet implemented!
+#' @return An \link[igraph]{igraph-package} \code{graph} object
 #'
 #' @export
 as_igraph <- function(obj) {

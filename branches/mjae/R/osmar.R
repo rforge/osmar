@@ -1,3 +1,6 @@
+#' @include osm-descriptors.R
+{}
+
 
 
 #' @S3method print osmar
@@ -21,38 +24,36 @@ summary.osmar <- function(object, ...) {
 
 ### Finding methods: #################################################
 
-#' @export
-attrs <- function(condition) {
-  structure(list(condition = substitute(condition)), what = "attrs")
-}
-
-#' @export
-tags <- function(condition) {
-  structure(list(condition = substitute(condition)), what = "tags")
-}
-
-#' @export
-refs <- function(condition) {
-  structure(list(condition = substitute(condition)), what = "refs")
-}
 
 
-#' @S3method node list
-node.list <- function(object) {
-  structure(object, element = "node")
-}
-
-#' @S3method way list
-way.list <- function(object) {
-  structure(object, element = "way")
-}
-
-#' @S3method relation list
-relation.list <- function(object) {
-  structure(object, element = "relation")
-}
-
-
+#' Find element for a given condition
+#'
+#' @details
+#'   The basis of an \code{\link{osmar}} object are
+#'   \code{data.frame}s; therefore the \code{condition} principally
+#'   follows the rules for \code{\link[base]{subset}}: logical
+#'   expression indicating elements or rows to keep.
+#'
+#'   Furthermore, one has to define on which element and which data
+#'   of the \code{\link{osmar}} object the condition applies:
+#'   \code{element(data(condition))}, see \code{\link{osm_descriptors}}.
+#'
+#' @examples
+#'   \dontrun{
+#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200)
+#'     find(muc, node(tags(v == "Marienplatz")))
+#'     find(muc, node(attrs(id == 19475890)))
+#'     find(muc, way(tags(k == "highway" & v == "pedestrian")))
+#'   }
+#'
+#' @param object An \code{\link{osmar}} object
+#' @param condition A condition for the element to find; see details
+#'   section.
+#'
+#' @return The ID of the the element
+#'
+#' @family finding
+#'
 #' @export
 find <- function(object, condition) {
   stopifnot(is_osmar(object))
@@ -131,13 +132,42 @@ find_relation.relations <- function(relations, condition) {
 
 
 
-### Find complete osmar object:
+### Find all elements:
 
-#' find_down
+#' Find all elements related to an ID
+#'
+#' For a given ID these functions return all IDs of related elements.
+#'
 #' @details
-#'   node     -> node
-#'   way      -> way + node
-#'   relation -> relation + way + node
+#'   \code{find_down} finds all elements downwards the hierarchy:
+#'
+#'   \tabular{rrr}{
+#'
+#'     node     \tab -> \tab node\cr
+#'
+#'     way      \tab -> \tab way + node\cr
+#'
+#'     relation \tab -> \tab relation + way + node\cr
+#'
+#'   }
+#'
+#' @param object An \code{\link{osmar}} object
+#' @param ids A vector of IDs tagged whether they are \code{node},
+#'   \code{way}, or \code{relation}
+#'
+#' @return A list with the three elements \code{node_ids},
+#'   \code{way_ids}, \code{relation_ids}
+#'
+#' @examples
+#'   \dontrun{
+#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200)
+#'     o1 <- find(muc, way(tags(k == "highway" & v == "pedestrian")))
+#'
+#'     find_down(muc, way(o1))
+#'     find_up(muc, way(o1))
+#'   }
+#'
+#' @family finding
 #'
 #' @export
 find_down <- function(object, ids) {
@@ -184,11 +214,20 @@ find_down_relation <- function(object, ids = NULL) {
 
 
 
-#' find_up
 #' @details
-#'   node     -> node + way + relation
-#'   way      -> way + relation
-#'   relation -> relation
+#'   \code{find_down} finds all elements upwards the hierarchy:
+#'
+#'   \tabular{rrr}{
+#'
+#'     node     \tab -> \tab node + way + relation\cr
+#'
+#'     way      \tab -> \tab way + relation\cr
+#'
+#'     relation \tab -> \tab relation\cr
+#'
+#'   }
+#'
+#' @rdname find_down
 #'
 #' @export
 find_up <- function(object, ids) {
@@ -225,6 +264,29 @@ find_up_relation <- function(object, ids = NULL) {
 
 ### Find nearest node with given conditions:
 
+#' Find nearest node with given conditions
+#'
+#' For a given ID, find nearest node (geographical distance) with
+#' given conditions.
+#'
+#' @param object An \code{\link{osmar}} object
+#' @param id An node ID
+#' @param condition Condition for the element to find; see
+#'   \code{\link{find}}
+#'
+#' @return A node ID or \code{NA}
+#'
+#' @examples
+#'   \dontrun{
+#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200)
+#'     id <- find(muc, node(tags(v == "Marienplatz")))[1]
+#'
+#'     find_nearest_node(muc, id, way(tags(k == "highway" & v == "pedestrian")))
+#'   }
+#'
+#' @family finding
+#'
+#' @importFrom geosphere distm
 #' @export
 find_nearest_node <- function(object, id, condition) {
   stopifnot(is_osmar(object))
@@ -290,10 +352,36 @@ subset_relations <- function(x, ids) {
 
 
 
+#' Subset an osmar object
+#'
+#' @param x An \code{\link{osmar}} object
+#' @param node_ids Node ID vector
+#' @param way_ids Way ID vector
+#' @param relation_ids Relation ID vector
+#' @param ids A list composed of \code{node_ids}, \code{way_ids},
+#'   \code{relation_ids}; for easier usage with results from
+#'   \code{\link{find_up}} and \code{\link{find_down}}
+#' @param ... Ignored
+#'
+#' @return An \code{\link{osmar}} object containing the specified
+#'   elements
+#'
+#' @examples
+#'   \dontrun{
+#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200)
+#'     id <- find(muc, node(tags(v == "Marienplatz")))
+#'
+#'     subset(muc, node_ids = id)
+#'
+#'     subset(muc, ids = find_up(muc, node(id)))
+#'   }
+#'
+#' @method subset osmar
+#'
 #' @S3method subset osmar
 subset.osmar <- function(x, node_ids = NULL, way_ids = NULL, relation_ids = NULL,
                          ids = list(node_ids = node_ids, way_ids = way_ids,
-                                    relation_ids = relation_ids)) {
+                                    relation_ids = relation_ids), ...) {
 
   x$nodes <- subset_nodes(x$nodes, ids$node_ids)
   x$ways <- subset_ways(x$ways, ids$way_ids)
@@ -306,6 +394,27 @@ subset.osmar <- function(x, node_ids = NULL, way_ids = NULL, relation_ids = NULL
 
 ### Combining methods: ###############################################
 
+#' Combine osmar objects
+#'
+#' Combine two or more \code{\link{osmar}} objects.
+#'
+#' @param ... \code{\link{osmar}} objects to be concatenated
+#'
+#' @return An \code{\link{osmar}} object based on the provided objects
+#'
+#' @examples
+#'   \dontrun{
+#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200)
+#'     o1 <- subset(muc, node_ids = find(muc, node(tags(v == "Marienplatz"))))
+#'     o2 <- subset(muc, ids = find_down(muc, way(c(96619179, 105071000))))
+#'
+#'     o1
+#'     o2
+#'     c(o1, o2)
+#'   }
+#'
+#' @method c osmar
+#'
 #' @S3method c osmar
 c.osmar <- function(...) {
   ## TODO: object[[1]] attributes?
@@ -352,11 +461,38 @@ merge_ways_nodes <- function(ways, nodes) {
 
 
 
-#' @export
-plot_nodes <- function(object, add = FALSE, ...) {
-  stopifnot(is_osmar(object))
+#' Plot osmar object
+#'
+#' Simple plotting functions to visualize \code{\link{osmar}}
+#' objects. Note that for more complex plots, we suggest to convert
+#' the objects into \code{sp} and use their plotting functionality.
+#'
+#' @param x An \code{\link{osmar}} object
+#' @param way_args A list of parameters for plotting ways
+#' @param node_args A list of parameters for plotting nodes
+#' @param ... Ignored
+#'
+#' @method plot osmar
+#'
+#' @S3method plot osmar
+plot.osmar <- function(x,
+                       way_args = list(col = gray(0.7)),
+                       node_args = list(pch = 19, cex = 0.1, col = gray(0.3)), ...) {
 
-  coords <- object$nodes[[1]][, c("lat", "lon")]
+  do.call(plot_ways, c(list(x), way_args))
+  do.call(plot_nodes, c(list(x, add = TRUE), node_args))
+}
+
+
+
+#' @param add New plot device or plot on existing onde
+#' @rdname plot.osmar
+#'
+#' @export
+plot_nodes <- function(x, add = FALSE, ...) {
+  stopifnot(is_osmar(x))
+
+  coords <- x$nodes[[1]][, c("lat", "lon")]
 
   if ( add )
     points(coords, ...)
@@ -366,11 +502,15 @@ plot_nodes <- function(object, add = FALSE, ...) {
 
 
 
+#' @param xlab A x-axis label
+#' @param ylab A y-axis label
+#' @rdname plot.osmar
+#'
 #' @export
-plot_ways <- function(object, add = FALSE, xlab = "lat", ylab = "lon", ...) {
-  stopifnot(is_osmar(object))
+plot_ways <- function(x, add = FALSE, xlab = "lat", ylab = "lon", ...) {
+  stopifnot(is_osmar(x))
 
-  dat <- merge_ways_nodes(object$ways[[3]], object$nodes[[1]])
+  dat <- merge_ways_nodes(x$ways[[3]], x$nodes[[1]])
 
   rlat <- range(dat$lat, na.rm = TRUE)
   rlon <- range(dat$lon, na.rm = TRUE)
@@ -388,16 +528,4 @@ plot_ways <- function(object, add = FALSE, xlab = "lat", ylab = "lon", ...) {
     }
   }
 }
-
-
-
-#' @S3method plot osmar
-plot.osmar <- function(object,
-                       way_args = list(col = gray(0.7)),
-                       node_args = list(pch = 19, cex = 0.1, col = gray(0.3)), ...) {
-
-  do.call(plot_ways, c(list(object), way_args))
-  do.call(plot_nodes, c(list(object, add = TRUE), node_args))
-}
-
 

@@ -17,11 +17,11 @@ Depends:
     methods,
     XML,
     RCurl,
-    sp,
     gtools,
     geosphere
 Suggests:
-    igraph
+    igraph,
+    sp
 License: GPL-2
 LazyLoad: yes
 URL: http://osmar.r-forge.r-project.org/
@@ -29,6 +29,7 @@ Build-dep: roxygen2
 Collate:
     'as-osmar-elements.R'
     'as-osmar.R'
+    'osm-descriptors.R'
     'source.R'
     'get.R'
     'osmar.R'

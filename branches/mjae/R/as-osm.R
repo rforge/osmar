@@ -10,8 +10,6 @@
 #' @return An xml object
 #'
 #' @note Not yet implemented!
-#'
-#' @export
 as_osm <- function(obj, ...) {
   stopifnot(class(obj) == "osmar")
 

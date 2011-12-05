@@ -1,4 +1,5 @@
 #' @include source.R
+#' @include osm-descriptors.R
 #' @include as-osmar.R
 {}
 
@@ -57,7 +58,7 @@ get_osm <- function(x, source = osmsource_api(), ...) {
 #' @param right Maximum longitude
 #' @param top Maximum latitutde
 #'
-#' @seealso \code{\link{get_osm}}
+#' @seealso \code{\link{osm_descriptors}} \code{\link{get_osm}}
 #'
 #' @rdname get_osm_elements
 #' @aliases get_osm_elements
@@ -113,61 +114,6 @@ size <- function(x, ...) {
 
 size.bbox <- function(x) {
   unname((x[1] - x[3]) * (x[2] - x[4]))
-}
-
-
-
-
-### Element: #########################################################
-
-element <- function(id, subclass) {
-  structure(c(id = id), class = c(subclass, "element"), element = subclass)
-}
-
-
-
-#' @export
-node <- function(object, ...) {
-  UseMethod("node")
-}
-
-#' @param object OSM ID
-#' @rdname get_osm_elements
-#' @method node default
-#'
-#' @S3method node default
-node.default <- function(object) {
-  element(object, "node")
-}
-
-
-
-#' @export
-way <- function(object, ...) {
-  UseMethod("way")
-}
-
-#' @rdname get_osm_elements
-#' @method way default
-#'
-#' @S3method way default
-way.default <- function(object) {
-  element(object, "way")
-}
-
-
-
-#' @export
-relation <- function(object, ...) {
-  UseMethod("relation")
-}
-
-#' @rdname get_osm_elements
-#' @method relation default
-#'
-#' @S3method relation default
-relation.default <- function(object) {
-  element(object, "relation")
 }
 
 

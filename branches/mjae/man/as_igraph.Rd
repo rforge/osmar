@@ -8,13 +8,10 @@
   \item{obj}{An \code{\link{osmar}} object}
 }
 \value{
-  An igraph \code{graph} object
+  An \link[igraph]{igraph-package} \code{graph} object
 }
 \description{
   Convert an osmar object to an igraph (see
   \link[igraph]{igraph-package}).
-}
-\note{
-  Not yet implemented!
 }
 

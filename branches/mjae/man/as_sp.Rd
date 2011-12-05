@@ -2,12 +2,10 @@
 \alias{as_sp}
 \title{Convert osmar object to sp object}
 \usage{
-  as_sp(obj, ...)
+  as_sp(obj)
 }
 \arguments{
   \item{obj}{An \code{\link{osmar}} object}
-
-  \item{...}{Ignored}
 }
 \value{
   A \link[sp]{sp} object
