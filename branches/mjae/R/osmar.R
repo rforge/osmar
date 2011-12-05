@@ -215,7 +215,7 @@ find_down_relation <- function(object, ids = NULL) {
 
 
 #' @details
-#'   \code{find_down} finds all elements upwards the hierarchy:
+#'   \code{find_up} finds all elements upwards the hierarchy:
 #'
 #'   \tabular{rrr}{
 #'
