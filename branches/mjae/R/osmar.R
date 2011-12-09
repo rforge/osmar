@@ -10,6 +10,17 @@ print_header <- function(what, x) {
 
 
 
+print_content <- function(what, x) {
+  for ( n in names(x) ) {
+    cat(sprintf("..$%s data.frame:", n), "\n")
+    cat(paste(strwrap(paste(x[[n]], sep = "", collapse = ", "),
+                      indent = 4, exdent = 4), collapse = "\n"), "\n")
+  }
+}
+
+
+
+
 #' Summarize osmar objects
 #'
 #' Summaries of \code{osmar}, \code{nodes}, \code{ways}, and
@@ -100,6 +111,8 @@ summary.nodes <- function(object, ...) {
                     lon = range(object$attrs$lon))
   rownames(ret$bbox) <- c("min", "max")
 
+  ret$content <- sapply(object, names)
+
   ret$key <- sort(table(object$tags$k), decreasing = TRUE)
   ret$key <- data.frame(Key = names(ret$key),
                         Freq = unname(ret$key),
@@ -128,8 +141,10 @@ summary.nodes <- function(object, ...) {
 #' @S3method print summary.nodes
 print.summary.nodes <- function(x, max.print = 10, ...) {
   cat(print_header("osmar$nodes", x$n), "\n\n")
+  cat(print_content("osmar$nodes", x$content), "\n")
+  cat("Bounding box:\n")
   print(x$bbox)
-  cat("\n")
+  cat("\nKey-Value contigency table:\n")
   print(x$keyval[seq(min(max.print, nrow(x$keyval))), ])
 }
 
@@ -172,6 +187,8 @@ summary.ways <- function(object, ...) {
                         stringsAsFactors = FALSE)
   rownames(ret$key) <- NULL
 
+  ret$content <- sapply(object, names)
+
   ret$val <- sort(table(object$tags$v), decreasing = TRUE)
   ret$val <- data.frame(Value = names(ret$val),
                         Freq = unname(ret$val),
@@ -194,6 +211,8 @@ summary.ways <- function(object, ...) {
 #' @S3method print summary.ways
 print.summary.ways <- function(x, max.print = 10, ...) {
   cat(print_header("osmar$ways", x$n), "\n\n")
+  cat(print_content("osmar$ways", x$content), "\n")
+  cat("Key-Value contigency table:\n")
   print(x$keyval[seq(min(max.print, nrow(x$keyval))), ])
 }
 
@@ -233,6 +252,8 @@ summary.relations <- function(object, ...) {
                         stringsAsFactors = FALSE)
   rownames(ret$key) <- NULL
 
+  ret$content <- sapply(object, names)
+
   ret$val <- sort(table(object$tags$v), decreasing = TRUE)
   ret$val <- data.frame(Value = names(ret$val),
                         Freq = unname(ret$val),
@@ -255,6 +276,8 @@ summary.relations <- function(object, ...) {
 #' @S3method print summary.relations
 print.summary.relations <- function(x, max.print = 10, ...) {
   cat(print_header("osmar$relations", x$n), "\n\n")
+  cat(print_content("osmar$relations", x$content), "\n")
+  cat("Key-Value contigency table:\n")
   print(x$keyval[seq(min(max.print, nrow(x$keyval))), ])
 }
 

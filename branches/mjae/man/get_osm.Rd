@@ -11,7 +11,7 @@
   \item{source}{OSM source, e.g.,
   \code{\link{osmsource_api}}}
 
-  \item{...}{Ignored}
+  \item{...}{Passed to the internal \code{get_osm_data}}
 }
 \value{
   An \code{\link{osmar}} object

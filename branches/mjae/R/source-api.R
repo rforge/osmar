@@ -31,7 +31,7 @@ osmsource_api <- function(url = "http://api.openstreetmap.org/api/0.6/") {
 
 
 get_osm_data.api <- function(source, what, ...) {
-  request <- osm_request(source, what)
+  request <- osm_request(source, what, ...)
   response <- getURL(request, .encoding = "UTF-8")
 
   response
@@ -51,8 +51,12 @@ function(source, what, ...) {
 
 
 setMethod("osm_request", signature = c("api", "element"),
-function(source, what, ...) {
+function(source, what, full = FALSE, ...) {
   element <- class(what)[1]
-  sprintf("%s%s/%s", source$url, element, what["id"])
+  r <- sprintf("%s%s/%s", source$url, element, what["id"])
+  if ( full )
+    r <- sprintf("%s/full", r)
+
+  r
 })
 

@@ -13,7 +13,7 @@
 #' @param x Data identifier; bounding box or specific element, see
 #'   \code{\link{get_osm_elements}}
 #' @param source OSM source, e.g., \code{\link{osmsource_api}}
-#' @param ... Ignored
+#' @param ... Passed to the internal \code{get_osm_data}
 #'
 #' @return An \code{\link{osmar}} object
 #'
@@ -36,8 +36,8 @@ get_osm <- function(x, source = osmsource_api(), ...) {
 
   ret <- xmlParse(raw)
   ret <- as_osmar(ret)
-  attr(ret, "identifier") <- x
-  attr(ret, "source") <- source
+  #attr(ret, "identifier") <- x
+  #attr(ret, "source") <- source
 
   ret
 }
