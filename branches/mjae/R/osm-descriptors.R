@@ -11,20 +11,20 @@
 #' @aliases osm_descriptors
 #' @rdname osm_descriptors
 #' @export
-nodes <- function(object) {
-  UseMethod("nodes")
+node <- function(object) {
+  UseMethod("node")
 }
 
 #' @rdname osm_descriptors
 #' @export
-ways <- function(object) {
-  UseMethod("ways")
+way <- function(object) {
+  UseMethod("way")
 }
 
 #' @rdname osm_descriptors
 #' @export
-relations <- function(object) {
-  UseMethod("relations")
+relation <- function(object) {
+  UseMethod("relation")
 }
 
 
