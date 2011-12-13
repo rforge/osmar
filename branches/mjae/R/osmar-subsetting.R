@@ -4,7 +4,7 @@
 
 
 subset_nodes <- function(x, ids) {
-  #x$attrs <- subset(x$attrs, id %in% ids)     # Subet should be in order of the ids
+  #x$attrs <- subset(x$attrs, id %in% ids)  # Subet should be in order of the ids
   x$attrs <- x$attrs[match(ids, x$attrs$id), ]
   x$attrs$user <- x$attrs$user[, drop = TRUE]
 
@@ -24,6 +24,7 @@ subset_ways <- function(x, ids) {
   x$tags$v <- droplevels(x$tags$v)
 
   x$refs <- subset(x$refs, id %in% ids)
+  #x$refs <- x$refs[match(ids, x$refs$id), ]
 
   x
 }
