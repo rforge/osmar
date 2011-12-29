@@ -51,7 +51,7 @@ plot.osmar <- function(x,
 plot_nodes <- function(x, add = FALSE, ...) {
   stopifnot(is_osmar(x))
 
-  coords <- x$nodes[[1]][, c("lat", "lon")]
+  coords <- x$nodes[[1]][, c("lon", "lat")]
 
   if ( add )
     points(coords, ...)
@@ -66,7 +66,7 @@ plot_nodes <- function(x, add = FALSE, ...) {
 #' @rdname plot.osmar
 #'
 #' @export
-plot_ways <- function(x, add = FALSE, xlab = "lat", ylab = "lon", ...) {
+plot_ways <- function(x, add = FALSE, xlab = "lon", ylab = "lat", ...) {
   stopifnot(is_osmar(x))
 
   dat <- merge_ways_nodes(x$ways[[3]], x$nodes[[1]])
@@ -77,13 +77,13 @@ plot_ways <- function(x, add = FALSE, xlab = "lat", ylab = "lon", ...) {
   dat <- split(dat, dat$id)
 
   if ( !add ) {
-    plot(1, type = "n", xlim = rlat, ylim = rlon,
+    plot(1, type = "n", xlim = rlon, ylim = rlat,
          xlab = xlab, ylab = ylab)
   }
 
   for ( coord in dat ) {
     if ( nrow(coord) >= 2 ) {
-      lines(coord[, c("lat", "lon")], ...)
+      lines(coord[, c("lon", "lat")], ...)
     }
   }
 }

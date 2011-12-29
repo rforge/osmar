@@ -98,7 +98,7 @@ find_relation.osmar <- function(object, ...) {
   find_relation.relations(object$relations, ...)
 }
 
-find_relation.relations <- function(relations, condition) {
+find_relation.relations <- function(object, condition) {
   stopifnot(attr(condition, "what") %in% c("attrs", "tags", "refs"))
 
   what <- attr(condition, "what")

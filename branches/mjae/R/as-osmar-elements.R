@@ -24,7 +24,7 @@ extract_attr.node_parsed<- function(elparsed){
                       version = numeric(),
                       changeset = numeric(),
                       user = factor(),
-                      uid = numeric(),
+                      uid = factor(),
                       lat = numeric(),
                       lon = numeric()))
   }
@@ -40,7 +40,7 @@ extract_attr.node_parsed<- function(elparsed){
   ret$lon<- as.numeric(as.character(ret$lon))
   ret$id<- as.numeric(as.character(ret$id))
   ret$version<- as.numeric(as.character(ret$version))
-  ret$uid<- as.numeric(as.character(ret$uid))
+  ret$uid<- as.factor(as.character(ret$uid))
   ret$user<- as.factor(as.character(ret$user))
   ret$changeset<- as.numeric(as.character(ret$changeset))
 
@@ -57,7 +57,7 @@ extract_attr.way_parsed <- function(elparsed){
                       version = numeric(),
                       changeset = numeric(),
                       user = factor(),
-                      uid = numeric()))
+                      uid = factor()))
   }
 
   if(any(sapply(ret, length)!=7)){
@@ -69,7 +69,7 @@ extract_attr.way_parsed <- function(elparsed){
   ret$timestamp <- strptime(ret$timestamp, format="%Y-%m-%dT%H:%M:%S")
   ret$id<- as.numeric(as.character(ret$id))
   ret$version<- as.numeric(as.character(ret$version))
-  ret$uid<- as.numeric(as.character(ret$uid))
+  ret$uid<- as.factor(as.character(ret$uid))
   ret$user<- as.factor(as.character(ret$user))
   ret$changeset<- as.numeric(as.character(ret$changeset))
 

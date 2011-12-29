@@ -5,7 +5,7 @@
 
 subset_nodes <- function(x, ids) {
   #x$attrs <- subset(x$attrs, id %in% ids)  # Subet should be in order of the ids
-  x$attrs <- x$attrs[match(ids, x$attrs$id), ]
+  x$attrs <- x$attrs[match(ids, x$attrs$id, nomatch=FALSE), ]
   x$attrs$user <- x$attrs$user[, drop = TRUE]
 
   x$tags <- subset(x$tags, id %in% ids)

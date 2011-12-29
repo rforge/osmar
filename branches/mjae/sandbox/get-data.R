@@ -41,3 +41,18 @@ osmosis
 xml2 <- get_osm(box, source = osmosis)
 
 
+
+#### sp spielerei
+
+bb <- center_bbox(174.76778, -36.85056, 700,700)
+src<- osmsource_api()
+ua<- get_osm(bb, source=src)
+
+a<-as_sp(ua,"points")
+uasplines<- as_sp(ua, "lines")
+rel_bus<- subset(ua, ids=find_down(ua,relation(
+                                      find(ua, relation(tags(v=="bus"))))
+                                      ))
+buslines<- as_sp(rel_bus, "lines")
+
+

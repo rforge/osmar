@@ -22,7 +22,7 @@ function(XML, nodedata, crs=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_def
   
   ways.meta<-getXMLMeta(XML)
   ret<-SpatialLinesDataFrame(SpatialLines(wayLineslist, proj4string=crs),
-                                    data=as.data.frame(ways.meta), match.ID=TRUE)
+                    data=as.data.frame(ways.meta), match.ID=TRUE)
   ret
 }
 
