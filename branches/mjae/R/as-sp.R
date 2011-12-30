@@ -28,6 +28,8 @@ as_sp.osmar <- function(obj, what,
 }
 
 as_sp.points <- function(obj, crs=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0")){
+    ## no possibility for multipoints-object (point-relations e.g.)
+  if(check_if_full(obj)[1]==FALSE) stop("no nodes")
   dat <- obj$nodes$attrs
   coords <- data.frame(lon=dat$lon, lat=dat$lat, row.names=dat$id)
   ret<- SpatialPointsDataFrame(coords= coords, proj4string=crs, data=dat, match.ID="id")
@@ -35,25 +37,23 @@ as_sp.points <- function(obj, crs=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +
 }
 
 as_sp.lines <- function(obj, crs=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0")){
-
+  fullcheck <- check_if_full(obj)
+  if(fullcheck[1]==FALSE) stop("no nodes")
+  if(fullcheck[2]==FALSE) stop("no ways")
   way_ids <- unique(obj$ways$refs$id)
   way_lns <- vector("list", length(way_ids))
   for(i in 1:length(way_lns))
     way_lns[[i]]<- Lines(ways_nodes2Line(way_ids[i], obj$ways, obj$nodes),
                       way_ids[i])                       
   
+  if(fullcheck[3]==FALSE) return(make_SLDF(obj, way_lns, crs, "way"))
   rel_ids <- unique(obj$relations$refs$id)
   rel_lns <- vector("list", length(rel_ids))
   for(i in 1:length(rel_ids))
     rel_lns[[i]] <- Lines(rels_ways_nodes2Line(rel_ids[i], obj$relations,
                                                obj$ways, obj$nodes),
                           rel_ids[i])
-  lns<- remove_emptyLines(c(way_lns, rel_lns)) 
-  splns<- SpatialLines(lns, proj4string=crs)
-
-  dat <- rbind(cbind(obj$ways$attrs,type=as.factor("way")),
-               cbind(obj$relations$attrs,type=as.factor("relation")))
-  ret <- SpatialLinesDataFrame(splns, data=dat, match.ID="id")  
+  ret <- make_SLDF(obj, c(way_lns, rel_lns), crs, "relation")
   ret  
 }  
 
@@ -75,8 +75,27 @@ ways_nodes2Line <- function(wayID, ways, nodes){
   ret
 }
 
+make_SLDF <- function(obj, lns, crs, what){
+  lns <- remove_emptyLines(lns)
+  splns<- SpatialLines(lns, proj4string=crs)
+  if(what=="way") 
+    dat <- cbind(obj$ways$attrs,type=as.factor("way"))
+  if(what=="relation")
+    dat <- rbind(cbind(obj$ways$attrs,type=as.factor("way")),
+               cbind(obj$relations$attrs,type=as.factor("relation")))
+  ret <- SpatialLinesDataFrame(splns, data=dat, match.ID="id")
+  ret  
+}
+
 remove_emptyLines <- function(LINES)
   LINES<- LINES[sapply(1:length(LINES), function(k) length(LINES[[k]]@Lines))!=0]  
+
+check_if_full <- function(obj){
+  ret <- as.logical(c(nrow(obj$nodes$attrs), nrow(obj$ways$attrs), 
+                      nrow(obj$relations$attrs)))
+  names(ret) <- c("nodes","ways", "relations")  
+  ret
+}
 
 ## there could be same ID for ways and relations. idea for a function
 #reformat_id <- function(obj){
