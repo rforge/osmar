@@ -331,18 +331,20 @@ c.osmar <- function(...) {
     do.call(rbind, lapply(objects, "[[", c(w1, w2)))
   }
 
-  objects[[1]]$nodes$attrs <- c_parts("nodes", "attrs")
-  objects[[1]]$nodes$tags <- c_parts("nodes", "tags")
+  objects[[1]]$nodes$attrs <- unique(c_parts("nodes", "attrs"))
+  objects[[1]]$nodes$tags <- unique(c_parts("nodes", "tags"))
 
-  objects[[1]]$ways$attrs <- c_parts("ways", "attrs")
-  objects[[1]]$ways$tags <- c_parts("ways", "tags")
-  objects[[1]]$ways$refs <- c_parts("ways", "refs")
+  objects[[1]]$ways$attrs <- unique(c_parts("ways", "attrs"))
+  objects[[1]]$ways$tags <- unique(c_parts("ways", "tags"))
+  objects[[1]]$ways$refs <- unique(c_parts("ways", "refs"))
 
-  objects[[1]]$relations$attrs <- c_parts("relations", "attrs")
-  objects[[1]]$relations$tags <- c_parts("relations", "tags")
-  objects[[1]]$relations$refs <- c_parts("relations", "refs")
+  objects[[1]]$relations$attrs <- unique(c_parts("relations", "attrs"))
+  objects[[1]]$relations$tags <- unique(c_parts("relations", "tags"))
+  objects[[1]]$relations$refs <- unique(c_parts("relations", "refs"))
 
   objects[[1]]
 }
+
+
 
 

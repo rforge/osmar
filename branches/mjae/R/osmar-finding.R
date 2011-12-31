@@ -140,7 +140,7 @@ find_relation.relations <- function(object, condition) {
 #'
 #' @examples
 #'   \dontrun{
-#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200)
+#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200))
 #'     o1 <- find(muc, way(tags(k == "highway" & v == "pedestrian")))
 #'
 #'     find_down(muc, way(o1))

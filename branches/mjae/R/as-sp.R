@@ -3,31 +3,52 @@
 #' Convert an osmar object to a \link[sp]{sp} object.
 #'
 #' @param obj An \code{\link{osmar}} object
+#' @param what A string describing the sp-object; see details section
+#' @param crs A valid \code{\link{CRS}} object. Defaul value is given by  
+#'            \code{\link{osm_crs}} -function
 #'
-#' @return A \link[sp]{sp} object
+#' @details Depending on the string given in \code{what} the \code{\link{osmar}}
+#'          object will be converted in an object given by the \link{sp}-package.
 #'
-#' @note Not yet implemented!
+#'          If \code{what=\"points\"} the object will be converted in a
+#'          \code{\link{SpatialPointsDataFrame}}. The data slot is filled with
+#'          the attrs slot of \code{obj$nodes}.
 #'
+#'          If \code{what=\"lines\"} the object will be converted in a
+#'          \code{\link{SpatialLinesDataFrame}}. It is build with all possible
+#'          elements which are in \code{obj$ways} \code{obj$relations}. The data
+#'          slot is filled with elements of both.
+#'          
+#'          If \code{what=\"polygons\"} the object will be converted in a
+#'          \code{\link{SpatialPolygonsDataFrame}}. It consists of elements which
+#'          are in \code{obj$ways} slot.
+#'
+#'          Every conversion needs at least a non-empty \code{obj$nodes$attrs}-slot
+#'          because spatial information are stored in there.
+#'
+#' @return A \link[sp]{sp} object; see details section
+#'
+#' @examples 
+#'   \dontrun{
+#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200))
+#'     muc_points <- as_sp(muc, "points")
+#'     muc_lines <- as_sp(muc, "lines")
+#'     muc_polygons <- as_sp(muc, "polygons")
+#'   }
+#'     
 #' @export
 
-as_sp <- function(obj, ...) 
-  UseMethod("as_sp")
-
-
-sp_fun <- function(obj, subclass)
-  structure(obj, class=c(subclass, "sp"))
-
-
-as_sp.osmar <- function(obj, what, 
-      crs=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0")) {
+as_sp <- function(obj, what, crs=osm_crs()){ 
+  stopifnot(is_osmar(obj))
   stopifnot(require("sp"))
-  stopifnot(what %in% c("points","lines","polygons"))
-  obj <- sp_fun(obj, what)
-  ret <- as_sp(obj, crs)
+  stopifnot(what %in% c("points", "lines", "polygons"))
+  fun <- sprintf("as_sp_%s", what)
+  ret <- do.call(fun, list(obj, crs))
   ret
 }
 
-as_sp.points <- function(obj, crs=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0")){
+####  as_sp for SpatialPoints
+as_sp_points <- function(obj, crs=osm_crs()){
     ## no possibility for multipoints-object (point-relations e.g.)
   if(check_if_full(obj)[1]==FALSE) stop("no nodes")
   dat <- obj$nodes$attrs
@@ -36,7 +57,8 @@ as_sp.points <- function(obj, crs=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +
   ret
 }
 
-as_sp.lines <- function(obj, crs=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0")){
+####  as_sp for SpatialLines
+as_sp_lines <- function(obj, crs=osm_crs()){
   fullcheck <- check_if_full(obj)
   if(fullcheck[1]==FALSE) stop("no nodes")
   if(fullcheck[2]==FALSE) stop("no ways")
@@ -90,12 +112,77 @@ make_SLDF <- function(obj, lns, crs, what){
 remove_emptyLines <- function(LINES)
   LINES<- LINES[sapply(1:length(LINES), function(k) length(LINES[[k]]@Lines))!=0]  
 
+
+####  as_sp for SpatialPolygons
+as_sp_polygons <- function(obj, crs=osm_crs()){
+  fullcheck <- check_if_full(obj)
+  if(fullcheck[1]==FALSE) stop("no nodes")
+  if(fullcheck[2]==FALSE) stop("no ways")
+  
+  way_ids <- unique(obj$ways$refs$id)
+  way_pols <- vector("list", length(way_ids))
+  for(i in 1:length(way_pols)){
+    way_pols[[i]]<- ways_nodes2Polygon(way_ids[i], obj$ways, obj$nodes)
+    if(!is.na(way_pols[[i]])) way_pols[[i]]<- Polygons(list(way_pols[[i]]), way_ids[i])
+  }
+  polys_position<- which(!is.na(way_pols)==TRUE)
+  way_pols <- way_pols[polys_position]
+  if(length(way_pols)==0) stop("no polygonlike objects in \"ways\"")
+    ## relations don't have many polygonlike objects
+  spols <- SpatialPolygons(way_pols, proj4string=crs)
+  dat <- obj$ways$attrs[polys_position,]
+  ret <- SpatialPolygonsDataFrame(spols, data=dat, match.ID="id")
+  ret                             
+}
+
+ways_nodes2Polygon <- function(wayID, ways, nodes){
+  nds <- subset(ways$refs, id==wayID)$ref  
+  if(length(nds)==0) return(NA)
+  geo <- nodes$attrs[match(nds,nodes$attrs$id), c("lon","lat")]
+  if(sum(check_poly(geo))!=2) return(NA)
+  ret<- Polygon(geo)
+  ret    
+}
+
+check_poly <- function(matrix){
+  ret <- matrix[1,]==matrix[nrow(matrix),]
+  ret
+}
+
+
+#### Check if osmar_elements have data
 check_if_full <- function(obj){
   ret <- as.logical(c(nrow(obj$nodes$attrs), nrow(obj$ways$attrs), 
                       nrow(obj$relations$attrs)))
   names(ret) <- c("nodes","ways", "relations")  
   ret
 }
+
+
+#' CRS for OpenStreetMap
+#' 
+#' Coordinate Reference System used in OpenStreetMap
+#'
+#' @param crs A valid proj4 string
+#'
+#' @details The Default value is the WGS84 Ellipsoid which is used in GPS, 
+#'          therefore it is used in OpenStreetMap
+#'
+#' @return a \code{\link{CRS}} object
+#' 
+#' @examples
+#'   osm_crs()
+#'   class(osm_crs())
+
+osm_crs <- 
+function(crs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"){
+  ret <- CRS(crs)
+  ret
+}
+
+
+
+#### Sandbox for new function
 
 ## there could be same ID for ways and relations. idea for a function
 #reformat_id <- function(obj){
@@ -110,5 +197,5 @@ check_if_full <- function(obj){
 #pretext_id <- function(ids, what)
 #  ids <- paste(what, ids, sep="")  
     
-as_sp.polygons <- function(obj, crs=CRS("+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"))
-  cat("to become acquainted with", "\n")
+
+
