@@ -51,7 +51,7 @@ as_sp <- function(obj, what, crs=osm_crs()){
 as_sp_points <- function(obj, crs=osm_crs()){
     ## no possibility for multipoints-object (point-relations e.g.)
   if(check_if_full(obj)[1]==FALSE) stop("no nodes")
-  dat <- obj$nodes$attrs
+  dat <- unique(obj$nodes$attrs)
   coords <- data.frame(lon=dat$lon, lat=dat$lat, row.names=dat$id)
   ret<- SpatialPointsDataFrame(coords= coords, proj4string=crs, data=dat, match.ID="id")
   ret
@@ -176,6 +176,7 @@ check_if_full <- function(obj){
 
 osm_crs <- 
 function(crs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"){
+  stopifnot(require("sp"))  
   ret <- CRS(crs)
   ret
 }
