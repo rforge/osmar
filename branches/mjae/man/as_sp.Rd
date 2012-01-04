@@ -2,7 +2,8 @@
 \alias{as_sp}
 \title{Convert osmar object to sp object}
 \usage{
-  as_sp(obj, what, crs = osm_crs())
+  as_sp(obj, what = c("points", "lines", "polygons"),
+    crs = osm_crs(), simplify = TRUE)
 }
 \arguments{
   \item{obj}{An \code{\link{osmar}} object}
@@ -12,6 +13,9 @@
 
   \item{crs}{A valid \code{\link[sp]{CRS}} object; default
   value is given by \code{\link{osm_crs}}-function}
+
+  \item{simplify}{Should the result list be simplified to
+  one element if possible?}
 }
 \value{
   A list of one or more \link[sp]{sp} objects; see Details
@@ -21,9 +25,9 @@
   Convert an osmar object to a \link[sp]{sp} object.
 }
 \details{
-  Depending on the string given in \code{what} the
-  \code{\link{osmar}} object will be converted in a list
-  with objects given by the \link[sp]{sp}-package:
+  Depending on the strings given in \code{what} the
+  \code{\link{osmar}} object will be converted into in a
+  list of objects given by the \link[sp]{sp}-package:
 
   \describe{
 
