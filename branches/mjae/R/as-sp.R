@@ -3,42 +3,50 @@
 #' Convert an osmar object to a \link[sp]{sp} object.
 #'
 #' @param obj An \code{\link{osmar}} object
-#' @param what A string describing the sp-object; see details section
-#' @param crs A valid \code{\link{CRS}} object. Defaul value is given by  
-#'            \code{\link{osm_crs}} -function
+#' @param what A string describing the sp-object; see Details section
+#' @param crs A valid \code{\link[sp]{CRS}} object; default value is
+#'   given by \code{\link{osm_crs}}-function
 #'
-#' @details Depending on the string given in \code{what} the \code{\link{osmar}}
-#'          object will be converted in an object given by the \link{sp}-package.
+#' @details
+#'   Depending on the string given in \code{what} the
+#'   \code{\link{osmar}} object will be converted in a list with
+#'   objects given by the \link[sp]{sp}-package:
 #'
-#'          If \code{what=\"points\"} the object will be converted in a
-#'          \code{\link{SpatialPointsDataFrame}}. The data slot is filled with
-#'          the attrs slot of \code{obj$nodes}.
+#'   \describe{
 #'
-#'          If \code{what=\"lines\"} the object will be converted in a
-#'          \code{\link{SpatialLinesDataFrame}}. It is build with all possible
-#'          elements which are in \code{obj$ways} \code{obj$relations}. The data
-#'          slot is filled with elements of both.
-#'          
-#'          If \code{what=\"polygons\"} the object will be converted in a
-#'          \code{\link{SpatialPolygonsDataFrame}}. It consists of elements which
-#'          are in \code{obj$ways} slot.
+#'     \item{\code{what = "points"}}{the object will be converted
+#'       in a \code{\link[sp]{SpatialPointsDataFrame}}. The data slot is
+#'       filled with the attrs slot of \code{obj$nodes}.}
 #'
-#'          Every conversion needs at least a non-empty \code{obj$nodes$attrs}-slot
-#'          because spatial information are stored in there.
+#'     \item{\code{what = "lines"}}{the object will be converted in
+#'       a \code{\link[sp]{SpatialLinesDataFrame}}. It is build with all
+#'       possible elements which are in \code{obj$ways}
+#'       \code{obj$relations}. The data slot is filled with elements
+#'       of both.}
 #'
-#' @return A \link[sp]{sp} object; see details section
+#'     \item{\code{what = "polygons"}}{the object will be converted
+#'       in a \code{\link[sp]{SpatialPolygonsDataFrame}}. It consists of
+#'       elements which are in \code{obj$ways} slot.}
 #'
-#' @examples 
+#'  }
+#'
+#'  Every conversion needs at least a non-empty
+#'  \code{obj$nodes$attrs}-slot because spatial information are stored
+#'  in there.
+#'
+#' @return
+#'   A list of one or more \link[sp]{sp} objects; see Details section.
+#'
+#' @examples
 #'   \dontrun{
 #'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200))
 #'     muc_points <- as_sp(muc, "points")
 #'     muc_lines <- as_sp(muc, "lines")
 #'     muc_polygons <- as_sp(muc, "polygons")
 #'   }
-#'     
+#'
 #' @export
-
-as_sp <- function(obj, what, crs=osm_crs()){ 
+as_sp <- function(obj, what, crs = osm_crs()) {
   stopifnot(is_osmar(obj))
   stopifnot(require("sp"))
   stopifnot(what %in% c("points", "lines", "polygons"))
@@ -46,6 +54,8 @@ as_sp <- function(obj, what, crs=osm_crs()){
   ret <- do.call(fun, list(obj, crs))
   ret
 }
+
+
 
 ####  as_sp for SpatialPoints
 as_sp_points <- function(obj, crs=osm_crs()){
@@ -57,6 +67,8 @@ as_sp_points <- function(obj, crs=osm_crs()){
   ret
 }
 
+
+
 ####  as_sp for SpatialLines
 as_sp_lines <- function(obj, crs=osm_crs()){
   fullcheck <- check_if_full(obj)
@@ -66,8 +78,8 @@ as_sp_lines <- function(obj, crs=osm_crs()){
   way_lns <- vector("list", length(way_ids))
   for(i in 1:length(way_lns))
     way_lns[[i]]<- Lines(ways_nodes2Line(way_ids[i], obj$ways, obj$nodes),
-                      way_ids[i])                       
-  
+                      way_ids[i])
+
   if(fullcheck[3]==FALSE) return(make_SLDF(obj, way_lns, crs, "way"))
   rel_ids <- unique(obj$relations$refs$id)
   rel_lns <- vector("list", length(rel_ids))
@@ -76,8 +88,10 @@ as_sp_lines <- function(obj, crs=osm_crs()){
                                                obj$ways, obj$nodes),
                           rel_ids[i])
   ret <- make_SLDF(obj, c(way_lns, rel_lns), crs, "relation")
-  ret  
-}  
+  ret
+}
+
+
 
 rels_ways_nodes2Line <- function(relID, rels, ways, nodes){
   ref<- subset(rels$refs, id==relID)
@@ -89,6 +103,8 @@ rels_ways_nodes2Line <- function(relID, rels, ways, nodes){
   wayln
 }
 
+
+
 ways_nodes2Line <- function(wayID, ways, nodes){
   nds <- subset(ways$refs, id==wayID)$ref
   if(length(nds)==0) return(NA)
@@ -97,20 +113,26 @@ ways_nodes2Line <- function(wayID, ways, nodes){
   ret
 }
 
+
+
 make_SLDF <- function(obj, lns, crs, what){
   lns <- remove_emptyLines(lns)
   splns<- SpatialLines(lns, proj4string=crs)
-  if(what=="way") 
+  if(what=="way")
     dat <- cbind(obj$ways$attrs,type=as.factor("way"))
   if(what=="relation")
     dat <- rbind(cbind(obj$ways$attrs,type=as.factor("way")),
                cbind(obj$relations$attrs,type=as.factor("relation")))
   ret <- SpatialLinesDataFrame(splns, data=dat, match.ID="id")
-  ret  
+  ret
 }
 
-remove_emptyLines <- function(LINES)
-  LINES<- LINES[sapply(1:length(LINES), function(k) length(LINES[[k]]@Lines))!=0]  
+
+
+remove_emptyLines <- function(LINES) {
+  LINES[sapply(1:length(LINES), function(k) length(LINES[[k]]@Lines))!=0]
+}
+
 
 
 ####  as_sp for SpatialPolygons
@@ -118,7 +140,7 @@ as_sp_polygons <- function(obj, crs=osm_crs()){
   fullcheck <- check_if_full(obj)
   if(fullcheck[1]==FALSE) stop("no nodes")
   if(fullcheck[2]==FALSE) stop("no ways")
-  
+
   way_ids <- unique(obj$ways$refs$id)
   way_pols <- vector("list", length(way_ids))
   for(i in 1:length(way_pols)){
@@ -132,17 +154,21 @@ as_sp_polygons <- function(obj, crs=osm_crs()){
   spols <- SpatialPolygons(way_pols, proj4string=crs)
   dat <- obj$ways$attrs[polys_position,]
   ret <- SpatialPolygonsDataFrame(spols, data=dat, match.ID="id")
-  ret                             
+  ret
 }
 
+
+
 ways_nodes2Polygon <- function(wayID, ways, nodes){
-  nds <- subset(ways$refs, id==wayID)$ref  
+  nds <- subset(ways$refs, id==wayID)$ref
   if(length(nds)==0) return(NA)
   geo <- nodes$attrs[match(nds,nodes$attrs$id), c("lon","lat")]
   if(sum(check_poly(geo))!=2) return(NA)
   ret<- Polygon(geo)
-  ret    
+  ret
 }
+
+
 
 check_poly <- function(matrix){
   ret <- matrix[1,]==matrix[nrow(matrix),]
@@ -150,33 +176,37 @@ check_poly <- function(matrix){
 }
 
 
+
 #### Check if osmar_elements have data
 check_if_full <- function(obj){
-  ret <- as.logical(c(nrow(obj$nodes$attrs), nrow(obj$ways$attrs), 
+  ret <- as.logical(c(nrow(obj$nodes$attrs), nrow(obj$ways$attrs),
                       nrow(obj$relations$attrs)))
-  names(ret) <- c("nodes","ways", "relations")  
+  names(ret) <- c("nodes","ways", "relations")
   ret
 }
 
 
+
 #' CRS for OpenStreetMap
-#' 
-#' Coordinate Reference System used in OpenStreetMap
+#'
+#' Coordinate Reference System used in OpenStreetMap.
 #'
 #' @param crs A valid proj4 string
 #'
-#' @details The Default value is the WGS84 Ellipsoid which is used in GPS, 
-#'          therefore it is used in OpenStreetMap
+#' @details
+#'   The default value is the WGS84 Ellipsoid which is used in GPS,
+#'   therefore it is used in OpenStreetMap.
 #'
-#' @return a \code{\link{CRS}} object
-#' 
+#' @return
+#'   A \code{\link[sp]{CRS}} object
+#'
 #' @examples
 #'   osm_crs()
 #'   class(osm_crs())
-
-osm_crs <- 
-function(crs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"){
-  stopifnot(require("sp"))  
+#'
+#' @export
+osm_crs <- function(crs = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0") {
+  stopifnot(require("sp"))
   ret <- CRS(crs)
   ret
 }
@@ -188,15 +218,15 @@ function(crs="+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs +towgs84=0,0,0"){
 ## there could be same ID for ways and relations. idea for a function
 #reformat_id <- function(obj){
 #  obj[["nodes"]][["attrs"]][["id"]]<- as.factor(pretext_id(obj[["nodes"]][["attrs"]][["id"]], "n_"))
-#  obj[["nodes"]][["tags"]][["id"]]<- as.factor(pretext_id(obj[["nodes"]][["tags"]][["id"]], "n_")) 
+#  obj[["nodes"]][["tags"]][["id"]]<- as.factor(pretext_id(obj[["nodes"]][["tags"]][["id"]], "n_"))
 #  for(j in 1:3)
 #    obj[["ways"]][[j]][["id"]]<- as.factor(pretext_id(obj[["ways"]][[j]][["id"]], "w_"))
 #  for(j in 1:3)
-#    obj[["relations"]][[j]][["id"]]<- as.factor(pretext_id(obj[["relations"]][[j]][["id"]], "r_"))    
+#    obj[["relations"]][[j]][["id"]]<- as.factor(pretext_id(obj[["relations"]][[j]][["id"]], "r_"))
 #  obj
 #}
 #pretext_id <- function(ids, what)
-#  ids <- paste(what, ids, sep="")  
-    
+#  ids <- paste(what, ids, sep="")
+
 
 

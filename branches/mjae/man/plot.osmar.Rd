@@ -11,7 +11,7 @@
 
   plot_nodes(x, add = FALSE, ...)
 
-  plot_ways(x, add = FALSE, xlab = "lat", ylab = "lon",
+  plot_ways(x, add = FALSE, xlab = "lon", ylab = "lat",
     ...)
 }
 \arguments{
