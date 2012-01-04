@@ -65,3 +65,19 @@ build_spl <- as_sp(buildings, "lines")
 par(mfrow=c(1,2))
 plot(build_spol, col=2)
 plot(build_spl, col=2)
+
+
+
+#######
+
+a1 <- as_sp(ua, "points")
+str(a1)
+
+a2 <- as_sp(ua, "points", simplify = FALSE)
+str(a2)
+
+a3 <- as_sp(ua, what = c("points", "lines"))
+str(a3, 1)
+
+a4 <- as_sp(ua)
+str(a4, 1)

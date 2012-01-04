@@ -6,10 +6,12 @@
 #' @param what A string describing the sp-object; see Details section
 #' @param crs A valid \code{\link[sp]{CRS}} object; default value is
 #'   given by \code{\link{osm_crs}}-function
+#' @param simplify Should the result list be simplified to one element
+#'   if possible?
 #'
 #' @details
-#'   Depending on the string given in \code{what} the
-#'   \code{\link{osmar}} object will be converted in a list with
+#'   Depending on the strings given in \code{what} the
+#'   \code{\link{osmar}} object will be converted into in a list of
 #'   objects given by the \link[sp]{sp}-package:
 #'
 #'   \describe{
@@ -46,12 +48,25 @@
 #'   }
 #'
 #' @export
-as_sp <- function(obj, what, crs = osm_crs()) {
-  stopifnot(is_osmar(obj))
+as_sp <- function(obj, what = c("points", "lines", "polygons"),
+                  crs = osm_crs(), simplify = TRUE) {
+
   stopifnot(require("sp"))
-  stopifnot(what %in% c("points", "lines", "polygons"))
-  fun <- sprintf("as_sp_%s", what)
-  ret <- do.call(fun, list(obj, crs))
+  stopifnot(is_osmar(obj))
+  stopifnot(any(check_if_full(obj)))
+
+  what <- match.arg(what, several.ok = TRUE)
+
+  ret <- lapply(what,
+                function(w) {
+                  fun <- sprintf("as_sp_%s", w)
+                  do.call(fun, list(obj, crs))
+                })
+  names(ret) <- what
+
+  if ( length(ret) == 1 & simplify )
+    ret <- ret[[1]]
+
   ret
 }
 
@@ -59,8 +74,14 @@ as_sp <- function(obj, what, crs = osm_crs()) {
 
 ####  as_sp for SpatialPoints
 as_sp_points <- function(obj, crs=osm_crs()){
-    ## no possibility for multipoints-object (point-relations e.g.)
-  if(check_if_full(obj)[1]==FALSE) stop("no nodes")
+  ## no possibility for multipoints-object (point-relations e.g.)
+
+  fullcheck <- check_if_full(obj)
+  if( !fullcheck["nodes"] ) {
+    warning("no nodes")
+    return(NULL)
+  }
+
   dat <- unique(obj$nodes$attrs)
   coords <- data.frame(lon=dat$lon, lat=dat$lat, row.names=dat$id)
   ret<- SpatialPointsDataFrame(coords= coords, proj4string=crs, data=dat, match.ID="id")
@@ -72,8 +93,15 @@ as_sp_points <- function(obj, crs=osm_crs()){
 ####  as_sp for SpatialLines
 as_sp_lines <- function(obj, crs=osm_crs()){
   fullcheck <- check_if_full(obj)
-  if(fullcheck[1]==FALSE) stop("no nodes")
-  if(fullcheck[2]==FALSE) stop("no ways")
+  if ( !fullcheck["nodes"] ) {
+    warning("no nodes")
+    return(NULL)
+  }
+  if ( !fullcheck["ways"] ) {
+    warning("no ways")
+    return(NULL)
+  }
+
   way_ids <- unique(obj$ways$refs$id)
   way_lns <- vector("list", length(way_ids))
   for(i in 1:length(way_lns))
@@ -138,8 +166,14 @@ remove_emptyLines <- function(LINES) {
 ####  as_sp for SpatialPolygons
 as_sp_polygons <- function(obj, crs=osm_crs()){
   fullcheck <- check_if_full(obj)
-  if(fullcheck[1]==FALSE) stop("no nodes")
-  if(fullcheck[2]==FALSE) stop("no ways")
+  if ( !fullcheck["nodes"] ) {
+    warning("no nodes")
+    return(NULL)
+  }
+  if ( fullcheck["ways"] ) {
+    warning("no ways")
+    return(NULL)
+  }
 
   way_ids <- unique(obj$ways$refs$id)
   way_pols <- vector("list", length(way_ids))
@@ -149,8 +183,13 @@ as_sp_polygons <- function(obj, crs=osm_crs()){
   }
   polys_position<- which(!is.na(way_pols)==TRUE)
   way_pols <- way_pols[polys_position]
-  if(length(way_pols)==0) stop("no polygonlike objects in \"ways\"")
-    ## relations don't have many polygonlike objects
+
+  if( length(way_pols) ==0 ) {
+    warning("no polygon-like objects in \"ways\"")
+    return(NULL)
+  }
+  ## relations don't have many polygonlike objects
+
   spols <- SpatialPolygons(way_pols, proj4string=crs)
   dat <- obj$ways$attrs[polys_position,]
   ret <- SpatialPolygonsDataFrame(spols, data=dat, match.ID="id")
@@ -171,17 +210,17 @@ ways_nodes2Polygon <- function(wayID, ways, nodes){
 
 
 check_poly <- function(matrix){
-  ret <- matrix[1,]==matrix[nrow(matrix),]
-  ret
+  matrix[1,] == matrix[nrow(matrix), ]
 }
 
 
 
 #### Check if osmar_elements have data
 check_if_full <- function(obj){
-  ret <- as.logical(c(nrow(obj$nodes$attrs), nrow(obj$ways$attrs),
+  ret <- as.logical(c(nrow(obj$nodes$attrs),
+                      nrow(obj$ways$attrs),
                       nrow(obj$relations$attrs)))
-  names(ret) <- c("nodes","ways", "relations")
+  names(ret) <- c("nodes", "ways", "relations")
   ret
 }
 
