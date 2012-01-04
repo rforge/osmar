@@ -21,7 +21,7 @@ Depends:
     geosphere
 Suggests:
     igraph,
-    sp
+    sp (>= 0.9-93)
 License: GPL-2
 LazyLoad: yes
 URL: http://osmar.r-forge.r-project.org/

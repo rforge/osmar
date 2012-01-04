@@ -27,18 +27,18 @@
 
   \describe{
 
-  \item{\code{what = \"points\"}}{the object will be
+  \item{\code{what = "points"}}{the object will be
   converted in a \code{\link[sp]{SpatialPointsDataFrame}}.
   The data slot is filled with the attrs slot of
   \code{obj$nodes}.}
 
-  \item{\code{what = \"lines\"}}{the object will be
-  converted in a \code{\link[sp]{SpatialLinesDataFrame}}.
-  It is build with all possible elements which are in
-  \code{obj$ways} \code{obj$relations}. The data slot is
-  filled with elements of both.}
+  \item{\code{what = "lines"}}{the object will be converted
+  in a \code{\link[sp]{SpatialLinesDataFrame}}. It is build
+  with all possible elements which are in \code{obj$ways}
+  \code{obj$relations}. The data slot is filled with
+  elements of both.}
 
-  \item{\code{what = \"polygons\"}}{the object will be
+  \item{\code{what = "polygons"}}{the object will be
   converted in a
   \code{\link[sp]{SpatialPolygonsDataFrame}}. It consists
   of elements which are in \code{obj$ways} slot.}
