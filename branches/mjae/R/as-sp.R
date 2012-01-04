@@ -127,7 +127,7 @@ rels_ways_nodes2Line <- function(relID, rels, ways, nodes){
   wayln<-lapply(wayref, "ways_nodes2Line", ways, nodes)
 #  relref<- subset(ref, type=="relation")$ref
 #  falls ways der relations noch eingebaut werden sollen
-  wayln <- wayln[!is.na(wayln)]
+  wayln <- wayln[!is.null(wayln)]
   wayln
 }
 
@@ -135,7 +135,7 @@ rels_ways_nodes2Line <- function(relID, rels, ways, nodes){
 
 ways_nodes2Line <- function(wayID, ways, nodes){
   nds <- subset(ways$refs, id==wayID)$ref
-  if(length(nds)==0) return(NA)
+  if(length(nds)==0) return(NULL)
   geo <- nodes$attrs[match(nds,nodes$attrs$id), c("lon","lat")]
   ret <- Line(geo)
   ret
@@ -170,7 +170,7 @@ as_sp_polygons <- function(obj, crs=osm_crs()){
     warning("no nodes")
     return(NULL)
   }
-  if ( fullcheck["ways"] ) {
+  if ( !fullcheck["ways"] ) {
     warning("no ways")
     return(NULL)
   }
@@ -179,12 +179,13 @@ as_sp_polygons <- function(obj, crs=osm_crs()){
   way_pols <- vector("list", length(way_ids))
   for(i in 1:length(way_pols)){
     way_pols[[i]]<- ways_nodes2Polygon(way_ids[i], obj$ways, obj$nodes)
-    if(!is.na(way_pols[[i]])) way_pols[[i]]<- Polygons(list(way_pols[[i]]), way_ids[i])
+    if(!is.null(way_pols[[i]]))
+      way_pols[[i]]<- Polygons(list(way_pols[[i]]), way_ids[i])
   }
-  polys_position<- which(!is.na(way_pols)==TRUE)
+  polys_position<- which(!sapply(way_pols, is.null))
   way_pols <- way_pols[polys_position]
 
-  if( length(way_pols) ==0 ) {
+  if( length(way_pols) == 0 ) {
     warning("no polygon-like objects in \"ways\"")
     return(NULL)
   }
@@ -200,10 +201,14 @@ as_sp_polygons <- function(obj, crs=osm_crs()){
 
 ways_nodes2Polygon <- function(wayID, ways, nodes){
   nds <- subset(ways$refs, id==wayID)$ref
-  if(length(nds)==0) return(NA)
+  if(length(nds)==0)
+    return(NULL)
+
   geo <- nodes$attrs[match(nds,nodes$attrs$id), c("lon","lat")]
-  if(sum(check_poly(geo))!=2) return(NA)
-  ret<- Polygon(geo)
+  if(sum(check_poly(geo)) != 2)
+    return(NULL)
+
+  ret <- Polygon(geo)
   ret
 }
 
