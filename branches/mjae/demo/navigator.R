@@ -37,9 +37,11 @@ muc
 
 ### Reduce to highways: ##############################################
 
-hways <- find(muc, way(tags(k == "highway")))
+hways_muc <- subset(muc, way_ids = find(muc, way(tags(k == "highway"))))
+hways <- find(hways_muc, way(tags(k == "name")))
 hways <- find_down(muc, way(hways))
 hways_muc <- subset(muc, ids = hways)
+hways_muc
 
 
 ## Plot complete data and highways on top:
@@ -56,35 +58,47 @@ plot_nodes(hways_muc, add = TRUE, pch = 19, cex = 0.6)
 
 ### Define route start and end nodes: ################################
 
-hway_start <- local({
+hway_start_node <- local({
   id <- find(muc, node(tags(v == "Sendlinger Tor")))[1]
   find_nearest_node(muc, id, way(tags(k == "highway")))
 })
+hway_start <- subset(muc, node(hway_start_node))
 
-hway_end <- local({
+hway_end_node <- local({
   id <- find(muc, node(attrs(lon > 11.59 & lat > 48.150)))[1]
   find_nearest_node(muc, id, way(tags(k == "highway")))
 })
+hway_end <- subset(muc, node(hway_end_node))
+
+
+## Add the route start and and nodes to the plot:
+plot_nodes(hway_start, add = TRUE, col = "red", pch = 19, cex = 2)
+plot_nodes(hway_end, add = TRUE, col = "blue", pch = 19, cex = 2)
 
 
 
 ### Create street graph and compute shortest route: ##################
 
-graph_muc <- as_igraph(hways_muc)
+gr_muc <- as_igraph(hways_muc)
+summary(gr_muc)
 
-route <- get.shortest.paths(graph_muc,
-                            from = as.character(hway_start),
-                            to = as.character(hway_end))
 
-route_nodes <- as.numeric(V(graph_muc)[route[[1]]]$name)
+### Compute shortest route:
+
+route <- get.shortest.paths(gr_muc,
+                            from = as.character(hway_start_node),
+                            to = as.character(hway_end_node))[[1]]
+
+route_nodes <- as.numeric(V(gr_muc)[route]$name)
+
 route_ids <- find_up(hways_muc, node(route_nodes))
-
 route_muc <- subset(hways_muc, ids = route_ids)
+route_muc
 
 
 ## Add route to the plot:
-plot_nodes(route_muc, add = TRUE, col = "red")
-plot_ways(route_muc, add = TRUE, col = "blue", lwd = 2)
+plot_nodes(route_muc, add = TRUE, col = "green", pch = 19)
+plot_ways(route_muc, add = TRUE, col = "green", lwd = 2)
 
 
 
