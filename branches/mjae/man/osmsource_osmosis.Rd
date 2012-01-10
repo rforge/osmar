@@ -27,7 +27,8 @@
   \item{Basic request elements}{See
   \code{\link{get_osm_elements}}.}
 
-  \item{osmosis_args}{...}
+  \item{osmosis_args}{Special argument which enables to use
+  osmosis syntax.}
 
   }
 }

@@ -2,17 +2,15 @@ Package: osmar
 Type: Package
 Title: OpenStreetMap and R
 Version: 1.1-0
-Date: 2012-01-04
+Date: 2012-01-10
 Author: Thomas Schlesinger and Manuel J. A. Eugster
 Maintainer: Thomas Schlesinger
     <tho.schlesinger@googlemail.com>
-Description: This package imports the (Spatial and
-    Non-Spatial) Data of OpenStreetMap into objects of R by
-    using the OSM-API v0.6. For now it is reduced on using
-    various commands of type "GET", like getting data of an
-    explicit element or a region defined by coordinates. It
-    also includes some methods on working with the newly
-    created objects.
+Description: This package provides infrastructure to access
+    OpenStreetMap data from different sources, to work with the data
+    in common R manner, and to convert data into available
+    infrastructure provided by existing R packages (e.g., into sp and
+    igraph objects).
 Depends:
     methods,
     XML,

@@ -18,7 +18,7 @@
 #'
 #' @examples
 #'   \dontrun{
-#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200)
+#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200))
 #'     find(muc, node(tags(v == "Marienplatz")))
 #'     find(muc, node(tags(v %agrep% "marienplatz")))
 #'     find(muc, node(attrs(id == 19475890)))
@@ -258,7 +258,7 @@ find_up_relation <- function(object, ids = NULL) {
 #'
 #' @examples
 #'   \dontrun{
-#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200)
+#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200))
 #'     id <- find(muc, node(tags(v == "Marienplatz")))[1]
 #'
 #'     find_nearest_node(muc, id, way(tags(k == "highway" & v == "pedestrian")))

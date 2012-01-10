@@ -83,11 +83,15 @@ are_osmar <- function(objs) {
 #'
 #'   \describe{
 #'
-#'     \item{\code{node}}{...}
+#'     \item{\code{nodes}}{A list with two data frames containing the
+#'       attributes and tags of the nodes.}
 #'
-#'     \item{\code{way}}{...}
+#'     \item{\code{ways}}{A list with three data frames containing the
+#'       attributes, tags, and references of the ways.}
 #'
-#'     \item{\code{relation}}{...}
+#'     \item{\code{relations}}{A list with three data frames
+#'       containing the attributes, tags, and references of the
+#'       relations.}
 #'
 #'   }
 #'

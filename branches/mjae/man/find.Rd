@@ -30,7 +30,7 @@
 }
 \examples{
 \dontrun{
-    muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200)
+    muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200))
     find(muc, node(tags(v == "Marienplatz")))
     find(muc, node(tags(v \%agrep\% "marienplatz")))
     find(muc, node(attrs(id == 19475890)))
