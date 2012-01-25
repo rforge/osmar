@@ -1,0 +1,3 @@
+
+* get_osm(..., full = TRUE)
+  - Add documentation for full = TRUE
