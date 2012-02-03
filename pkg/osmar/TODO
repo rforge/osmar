@@ -1,3 +1,6 @@
 
 * TODO get_osm(..., full = TRUE)
   - Add documentation for full = TRUE
+
+* TODO summary functions
+  - error with osmar_elements without tags
