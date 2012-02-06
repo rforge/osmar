@@ -17,7 +17,7 @@ nd <- node(373395)
 api <- osmsource_api()
 api
 
-xml1 <- get_osm(box, source = api)
+xml1 <- get_osm(nd, source = api)
 xml1
 
 summary(xml1)
