@@ -360,7 +360,9 @@ c.osmar <- function(...) {
 
   objects[[1]]$ways$attrs <- unique(c_parts("ways", "attrs"))
   objects[[1]]$ways$tags <- unique(c_parts("ways", "tags"))
-  objects[[1]]$ways$refs <- unique(c_parts("ways", "refs"))
+  #objects[[1]]$ways$refs <- unique(c_parts("ways", "refs"))
+  #  unique does make trouble with as_sp_polygons
+  objects[[1]]$ways$refs <- c_parts("ways", "refs")
 
   objects[[1]]$relations$attrs <- unique(c_parts("relations", "attrs"))
   objects[[1]]$relations$tags <- unique(c_parts("relations", "tags"))
