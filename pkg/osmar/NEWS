@@ -1,4 +1,16 @@
 
+Changes in osmar version 1.1-2
+
+  o A special thanks goes to Roger Bivand who is involved in most of
+    the fixes and improvements in this version!
+
+  o Introduced as_osmar_bbox generic and as_osmar_bbox.Spatial.
+
+  o Renamed bbox function to corner_bbox function to avoid NAMESPACE
+    clashes with the sp package.
+
+  o c.osmar/unique bug resolved (unique removes closed ways).
+
 Changes in osmar version 1.1-1
 
   o Workaround for a serious xmlClone-bug; thanks to Roger Bivand for

@@ -14,8 +14,8 @@
 \section{Supported request elements}{
   \describe{ \item{Bounding box:}{
 
-  Use \code{\link{bbox}} or \code{\link{center_bbox}} to
-  retrieve:
+  Use \code{\link{corner_bbox}} or
+  \code{\link{center_bbox}} to retrieve:
 
   \itemize{
 

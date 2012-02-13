@@ -126,4 +126,3 @@ as_osmar <- function(xml) {
   osmar_class(osmar)
 }
 
-

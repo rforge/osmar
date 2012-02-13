@@ -1,8 +1,8 @@
 Package: osmar
 Type: Package
 Title: OpenStreetMap and R
-Version: 1.1-1
-Date: 2012-02-06
+Version: 1.1-2
+Date: 2012-02-13
 Author: Thomas Schlesinger and Manuel J. A. Eugster
 Maintainer: Thomas Schlesinger
     <tho.schlesinger@googlemail.com>
@@ -40,3 +40,4 @@ Collate:
     'source-api.R'
     'source-file.R'
     'source-osmosis.R'
+    'as-osmar-sp.R'

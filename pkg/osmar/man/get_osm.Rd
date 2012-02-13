@@ -27,7 +27,7 @@
 \dontrun{
   api <- osmsource_api()
 
-  box <- bbox(11.579341, 48.15102, 11.582852, 48.1530)
+  box <- corner_bbox(11.579341, 48.15102, 11.582852, 48.1530)
   gschw <- get_osm(box, source = api)
 
   kaufstr <- get_osm(way(3810479))
