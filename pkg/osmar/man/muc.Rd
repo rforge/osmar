@@ -65,6 +65,9 @@ List of 3
 }
 \source{\url{http://www.openstreetmap.org/}, downloaded 10 February 2012.}
 \examples{
-data(muc)
+data("muc", package = "osmar")
+}
+\seealso{
+  \code{\link{find}}, \code{\link{as_sp}}
 }
 \keyword{datasets}
