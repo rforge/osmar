@@ -16,6 +16,12 @@
   Functions to convert a given \code{\link[sp]{sp}} object
   to osmar infrastructure and objects.
 }
+\examples{
+data("muc", package = "osmar")
+  muc_points <- as_sp(muc, "points")
+  bbox(muc_points)           # sp::bbox object
+  as_osmar_bbox(muc_points)  # osmar::bbox object
+}
 \seealso{
   Other as_osmar_bbox: \code{\link{as_osmar_bbox}},
   \code{\link{center_bbox}}, \code{\link{corner_bbox}}

@@ -17,13 +17,11 @@
 #'   \code{element(data(condition))}, see \code{\link{osm_descriptors}}.
 #'
 #' @examples
-#'   \dontrun{
-#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200))
-#'     find(muc, node(tags(v == "Marienplatz")))
-#'     find(muc, node(tags(v %agrep% "marienplatz")))
-#'     find(muc, node(attrs(id == 19475890)))
-#'     find(muc, way(tags(k == "highway" & v == "pedestrian")))
-#'   }
+#'   data("muc", package = "osmar")
+#'   find(muc, node(tags(v == "Marienplatz")))
+#'   find(muc, node(tags(v %agrep% "marienplatz")))
+#'   find(muc, node(attrs(id == 19475890)))
+#'   find(muc, way(tags(k == "highway" & v == "pedestrian")))
 #'
 #' @param object An \code{\link{osmar}} object
 #' @param condition A condition for the element to find; see details
@@ -139,13 +137,11 @@ find_relation.relations <- function(object, condition) {
 #'   \code{way_ids}, \code{relation_ids}
 #'
 #' @examples
-#'   \dontrun{
-#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200))
-#'     o1 <- find(muc, way(tags(k == "highway" & v == "pedestrian")))
+#'   data("muc", package = "osmar")
+#'   o1 <- find(muc, way(tags(k == "highway" & v == "pedestrian")))
 #'
-#'     find_down(muc, way(o1))
-#'     find_up(muc, way(o1))
-#'   }
+#'   find_down(muc, way(o1))
+#'   find_up(muc, way(o1))
 #'
 #' @family finding
 #'
@@ -257,12 +253,10 @@ find_up_relation <- function(object, ids = NULL) {
 #' @return A node ID or \code{NA}
 #'
 #' @examples
-#'   \dontrun{
-#'     muc <- get_osm(center_bbox(11.575278, 48.137222, 200, 200))
-#'     id <- find(muc, node(tags(v == "Marienplatz")))[1]
+#'   data("muc", package = "osmar")
+#    id <- find(muc, node(tags(v == "Marienplatz")))[1]
 #'
-#'     find_nearest_node(muc, id, way(tags(k == "highway" & v == "pedestrian")))
-#'   }
+#    find_nearest_node(muc, id, way(tags(k == "highway" & v == "pedestrian")))
 #'
 #' @family finding
 #'

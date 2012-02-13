@@ -31,6 +31,7 @@
   gschw <- get_osm(box, source = api)
 
   kaufstr <- get_osm(way(3810479))
+  kaufstr_full <- get_osm(way(3810479), full = TRUE)
   }
 }
 \seealso{

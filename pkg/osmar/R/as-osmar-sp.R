@@ -1,3 +1,5 @@
+#' @include as-osmar.R
+{}
 
 
 
@@ -15,6 +17,12 @@
 #'
 #' @family as_osmar_bbox
 #' @rdname as_osmar_sp
+#'
+#' @examples
+#'   data("muc", package = "osmar")
+#'   muc_points <- as_sp(muc, "points")
+#'   bbox(muc_points)           # sp::bbox object
+#'   as_osmar_bbox(muc_points)  # osmar::bbox object
 #'
 #' @S3method as_osmar_bbox Spatial
 as_osmar_bbox.Spatial <- function(obj, ...) {

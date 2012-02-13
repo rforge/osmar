@@ -4,6 +4,8 @@ Changes in osmar version 1.1-2
   o A special thanks goes to Roger Bivand who is involved in most of
     the fixes and improvements in this version!
 
+  o Added muc.RData and removed \dontrun from most of the examples.
+
   o Introduced as_osmar_bbox generic and as_osmar_bbox.Spatial.
 
   o Renamed bbox function to corner_bbox function to avoid NAMESPACE
