@@ -99,7 +99,8 @@ are_osmar <- function(objs) {
 #'
 #' @examples
 #'   file <- system.file("extdata", "kaufstr.xml", package = "osmar")
-#'   kaufstr <- as_osmar(xmlParse(file))
+#'   raw <- readLines(file)
+#'   kaufstr <- as_osmar(xmlParse(raw))
 #'
 #' @export
 as_osmar <- function(xml) {
