@@ -56,7 +56,15 @@ find_node.nodes <- function(object, condition) {
   stopifnot(attr(condition, "what") %in% c("attrs", "tags"))
 
   what <- attr(condition, "what")
-  id <- subset(object[[what]], eval(condition$condition), select = id)$id
+
+  ## id <- subset(object[[what]], eval(condition$condition), select = id)$id
+  ## ... the above doesn't work when calling find_node.nodes
+  ## inside a function; therefore (from subset.data.frame):
+  r <- eval(condition$condition, object[[what]], parent.frame(3))
+  if (!is.logical(r))
+    stop("'subset' must evaluate to logical")
+  r <- r & !is.na(r)
+  id <- object[[what]]$id[r]
 
   if ( length(id) == 0 )
     id <- as.numeric(NA)
@@ -78,7 +86,14 @@ find_way.ways <- function(object, condition) {
   stopifnot(attr(condition, "what") %in% c("attrs", "tags", "refs"))
 
   what <- attr(condition, "what")
-  id <- subset(object[[what]], eval(condition$condition), select = id)$id
+
+  ## id <- subset(object[[what]], eval(condition$condition), select = id)$id
+  ## ... see find_nodes.node for the explanation.
+  r <- eval(condition$condition, object[[what]], parent.frame(3))
+  if (!is.logical(r))
+    stop("'subset' must evaluate to logical")
+  r <- r & !is.na(r)
+  id <- object[[what]]$id[r]
 
   if ( length(id) == 0 )
     id <- as.numeric(NA)
@@ -100,7 +115,13 @@ find_relation.relations <- function(object, condition) {
   stopifnot(attr(condition, "what") %in% c("attrs", "tags", "refs"))
 
   what <- attr(condition, "what")
-  id <- subset(object[[what]], eval(condition$condition), select = id)$id
+  ## id <- subset(object[[what]], eval(condition$condition), select = id)$id
+  ## ... see find_nodes.node for the explanation.
+  r <- eval(condition$condition, object[[what]], parent.frame(3))
+  if (!is.logical(r))
+    stop("'subset' must evaluate to logical")
+  r <- r & !is.na(r)
+  id <- object[[what]]$id[r]
 
   if ( length(id) == 0 )
     id <- numeric(NA)
@@ -254,9 +275,9 @@ find_up_relation <- function(object, ids = NULL) {
 #'
 #' @examples
 #'   data("muc", package = "osmar")
-#    id <- find(muc, node(tags(v == "Marienplatz")))[1]
+#'   id <- find(muc, node(tags(v == "Marienplatz")))[1]
 #'
-#    find_nearest_node(muc, id, way(tags(k == "highway" & v == "pedestrian")))
+#'   find_nearest_node(muc, id, way(tags(k == "highway" & v == "pedestrian")))
 #'
 #' @family finding
 #'

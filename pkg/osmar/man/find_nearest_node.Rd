@@ -21,6 +21,9 @@
 }
 \examples{
 data("muc", package = "osmar")
+  id <- find(muc, node(tags(v == "Marienplatz")))[1]
+
+  find_nearest_node(muc, id, way(tags(k == "highway" & v == "pedestrian")))
 }
 \seealso{
   Other finding: \code{\link{find}},
