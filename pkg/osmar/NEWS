@@ -15,6 +15,8 @@ Changes in osmar version 1.1-2
 
   o c.osmar/unique bug resolved (unique removes closed ways).
 
+  o summary.nodes/no keyval bug resolved (problem if osmar$nodes does not have any tags)
+
 
 Changes in osmar version 1.1-1
 
