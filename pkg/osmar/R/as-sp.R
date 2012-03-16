@@ -183,6 +183,8 @@ ways_nodes2Line <- function(wayID, ways, nodes){
     return(NULL)
   }
   geo <- nodes$attrs[match(nds,nodes$attrs$id), c("lon","lat")]
+  if(sum(is.na(geo)==TRUE)>=1)
+    geo<- geo[!is.na(geo[,1]),]
   ret <- Line(geo)
   ret
 }
@@ -254,6 +256,8 @@ ways_nodes2Polygon <- function(wayID, ways, nodes){
     return(list(NULL))
 
   geo <- nodes$attrs[match(nds,nodes$attrs$id), c("lon","lat")]
+  if(sum(is.na(geo)==TRUE)>=1)
+    geo<- geo[!is.na(geo[,1]),]
   if(sum(is_poly(geo)) != 2)
     return(list(NULL))
 
