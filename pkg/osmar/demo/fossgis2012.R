@@ -37,12 +37,19 @@ readline("Press <Enter> to continue")
 
 ###### making of the benchmap   ############################
 
+#### function for reducing osmar object to original area
+reduce_osmar<- function(object, boundbox){
+  id<- find(object,
+            node(attrs(lon>=boundbox[["left"]] & lon<=boundbox[["right"]] & lat>=boundbox[["bottom"]] & lat<=boundbox[["top"]])))
+  ids<- find_up(object, node(id))
+  ret<-subset(object, ids=ids)
+  ret
+}
+
 #### defining original bounding box and 
 #### reducing the osmar object to this bounding box
 bb<-center_bbox(12.232221,51.840577, 2000,2000)
-red_id<-find(dessau, node(attrs(lon>=bb["left"] & lon<=bb["right"] & lat>=bb["bottom"] & lat<=bb["top"])))
-red_ids<-find_up(dessau, node(red_id))
-red_dessau<-subset(dessau, ids=red_ids)
+red_dessau<-reduce_osmar(dessau,bb)
 red_dessau
 
 par(ask=TRUE)
@@ -112,3 +119,60 @@ for(i in 1:nrow(bench_data)){
 bench_data[is.na(bench_data)]<-0
 head(bench_data)
 
+par(ask=TRUE)
+readline("Press <Enter> to continue")
+##### Node count map ###################################################
+#### red_dessau2: 10km x 10km area of dessau reduced to 10km x 10km
+#### sp_dessau2: sp object as a result of as_sp(red_dessau2)
+
+#### building a grid and making an osmar-object for every grid-cell ->bboxlist
+summary(red_dessau2$nodes)$bbox->box
+long <- seq(box[1,2], box[2,2], length.out=35)
+lat <- seq(box[1,1], box[2,1], length.out=35)
+
+coordslist <- vector("list", 34*34)
+i <- 1
+for(lo in 1:(length(long)-1)){
+  for(la in 1:(length(lat)-1)){
+    coordslist[[i]] <- c(left=long[lo],right=long[lo+1], bottom=lat[la],top=lat[la+1])
+    i<-i+1
+  }
+}
+
+bboxlist<-vector("list", 34*34)
+for(i in 1:length(bboxlist)){
+  bboxlist[[i]] <- reduce_osmar(red_dessau2, coordslist[[i]])
+}
+
+
+#### counting nodes in every grid.cell
+nodecounts<-NA
+for(i in 1:length(bboxlist))
+  nodecounts[i]<- summary(bboxlist[[i]]$nodes)$n[["nodes"]]
+
+
+#### plotting the map with help of the graphic packages  
+library(fBasics)
+library(plotrix)
+plot(sp_dessau2[[1]], col="white", axes=TRUE)
+colors <- seqPalette(max(nodecounts)+1, "Reds")
+for(i in 1:length(bboxlist)){
+  tmp<-coordslist[[i]]
+  rect(tmp[1],tmp[3],tmp[2],tmp[4], border=NA,angle=180, col=colors[summary(bboxlist[[i]]$nodes)$n[["nodes"]]])
+}
+
+color.legend(12.15, 51.891, 12.31, 51.894, rect.col=colors,
+              legend=c(0,rep("",99),100,rep("",99),200,rep("",99),300, rep("",99),400,rep("",45)))
+
+#### for orientation buildings and the river "Elbe" are plotted
+build_id <- find(red_dessau2, way(tags(k=="building")))
+build_ids<- find_down(red_dessau2, ids=way(build_id))
+build_dessau2<-subset(red_dessau2, ids=build_ids)
+plot_ways(build_dessau2, col=gray(0.6),add=TRUE)
+
+elb_id<-find(red_dessau2, way(tags(v=="Elbe")))
+elb_ids<-find_down(red_dessau2, ids=way(elb_id))
+elbe<-subset(red_dessau2, ids=elb_ids)
+plot_ways(elbe, col="lightblue", add=TRUE, lwd=2)
+
+title("Count of Nodes in Dessau Area with buildings and the Elbe", line=3)
