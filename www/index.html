@@ -14,9 +14,13 @@
   <h1>OpenStreetMap and R</h1>
   <div id="h1sub">R package <tt>osmar</tt></div>
 
-  <p class="header"></p>
+  <p class="header">
+    <img src="osmar-concept.svg" width="90%"/><br/>
 
-  <p><center><img src="osmar-concept.svg" width="90%"/></center><p>
+    <img src="munich-highway-map.png" />
+    <img src="munich-highway-map2.png"/>
+    <img src="osmar-ua-version.png"/>
+  </p>
 
   <p>
     The <tt>osmar</tt> package provides infrastructure to access
@@ -30,46 +34,46 @@
   </p>
 
 
-  <h2>Demonstration</h2>
-
-  <p>
-    <center>
-      <img src="munich-highway-map.png" style="margin-right:30px" />
-      <img src="munich-highway-map2.png" style="margin-left:30px" />
-    </center>
-  </p>
-
-  
-  <h3>R as navigator</h3>
-
-  <p>
-    The <tt>navigator</tt> demo demonstrates how to use R as a simple
-    navigator device:
-    <blockquote>
-    <pre>
-R> demo("navigator")
-    </pre>
-    </blockquote>
-  </p>
-
-
-  <h2>Download</h2>
+  <h2>Usage</h2>
 
   <p>
     The <b>stable version</b> of archetypes is available
     on <a href="http://cran.r-project.org/package=osmar">CRAN</a>;
-    issue the following from within R to install it:
-    <blockquote>
+    issue the following from within R to install and load it:
+    <blockquote class="code">
     <pre>
 R> install.packages("osmar")
-    </pre>
+R> library("osmar")</pre>
     </blockquote>
   </p>
+
+
+  <h2>Demos</h2>
+  <p>
+    <b>navigator:</b> Simple routing demo using the igraph-package.
+    <blockquote class="code">
+    <pre>
+R> demo("navigator")</pre>
+    </blockquote>
+  </p>
+  <p>
+    <b>fossgis2012:</b> Examples of the FOSSGIS 2012 presentation in
+    Dessau (Germany).
+    <blockquote class="code">
+    <pre>
+R> source("http://osmar.r-forge.r-project.org/fossgis2012.R")</pre>
+    </blockquote>
+  </p>
+
+
+
+  <h2>Development</h2>
 
   <p>
     The <b>development version</b> is available on
     <a href="https://r-forge.r-project.org/projects/osmar/">R-Forge</a>.
   </p>
+
 
   <p class="footer">
     Created by Thomas Schlesinger
