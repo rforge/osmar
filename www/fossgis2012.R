@@ -3,6 +3,8 @@
 #######################################################################################
 
 library("osmar")
+library("fBasics")
+library("plotrix")
 
 par(ask=TRUE)
 readline("Press <Enter> to continue")

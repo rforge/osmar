@@ -14,14 +14,6 @@
   <h1>OpenStreetMap and R</h1>
   <div id="h1sub">R package <tt>osmar</tt></div>
 
-  <p class="header">
-    <img src="osmar-concept.svg" width="90%"/><br/>
-
-    <img src="munich-highway-map.png" />
-    <img src="munich-highway-map2.png"/>
-    <img src="osmar-ua-version.png"/>
-  </p>
-
   <p>
     The <tt>osmar</tt> package provides infrastructure to access
     <a href="http://www.openstreetmap.org/">OpenStreetMap</a> data
@@ -33,6 +25,13 @@
     objects).
   </p>
 
+  <p class="header">
+    <img src="osmar-concept.svg" width="90%"/><br/>
+
+    <img src="munich-highway-map.png" />
+    <img src="munich-highway-map2.png"/>
+    <img src="dessau.png"/>
+  </p>
 
   <h2>Usage</h2>
 
@@ -40,8 +39,8 @@
     The <b>stable version</b> of archetypes is available
     on <a href="http://cran.r-project.org/package=osmar">CRAN</a>;
     issue the following from within R to install and load it:
-    <blockquote class="code">
-    <pre>
+    <blockquote>
+      <pre class="code">
 R> install.packages("osmar")
 R> library("osmar")</pre>
     </blockquote>
@@ -51,17 +50,22 @@ R> library("osmar")</pre>
   <h2>Demos</h2>
   <p>
     <b>navigator:</b> Simple routing demo using the igraph-package.
-    <blockquote class="code">
-    <pre>
-R> demo("navigator")</pre>
-    </blockquote>
+    <blockquote class="code"><pre>
+R> demo("navigator")</pre></blockquote>
   </p>
   <p>
-    <b>fossgis2012:</b> Examples of the FOSSGIS 2012 presentation in
-    Dessau (Germany).
-    <blockquote class="code">
-    <pre>
-R> source("http://osmar.r-forge.r-project.org/fossgis2012.R")</pre>
+    <b>fossgis2012:</b> Examples of
+    the <a href="http://www.fossgis.de/konferenz/2012/">FOSSGIS
+    2012</a> presentation in Dessau (Germany).
+    <blockquote>
+    <pre class="code">
+R> download.file("http://osmar.r-forge.r-project.org/fossgis2012.R",
++    "fossgis2012.R")</pre>
+
+    Open file with internal editor:
+    <pre class="code">
+R> edit(file = "fossgis2012.R")</pre>
+    And execute each line <tt>CTRL+R</tt>.
     </blockquote>
   </p>
 
