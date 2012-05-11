@@ -1,6 +1,6 @@
 export("%agrep%")
 export("%grep%")
-export(as_igraph)
+export(as_igraph0)
 export(as_osmar)
 export(as_osmar_bbox)
 export(as_sp)
