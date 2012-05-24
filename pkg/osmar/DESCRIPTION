@@ -30,7 +30,6 @@ Collate:
     'osmar-plotting.R'
     'as-osmar-elements.R'
     'as-osmar.R'
-    'as-igraph0.R'
     'as-osm.R'
     'as-sp.R'
     'get.R'
@@ -41,3 +40,4 @@ Collate:
     'source-file.R'
     'source-osmosis.R'
     'as-osmar-sp.R'
+    'as-igraph0.R'

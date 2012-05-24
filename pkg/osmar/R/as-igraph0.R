@@ -14,7 +14,7 @@
 #' @return An igraph0-package \code{graph} object
 #'
 #' @export
-as_igraph0 <- function(obj) {
+as_igraph <- function(obj) {
   stopifnot(is_osmar(obj))
   stopifnot(require("igraph0"))
 
@@ -51,7 +51,7 @@ as_igraph0 <- function(obj) {
 }
 
 
-## as_igraph0 <- function(obj) {
+## as_igraph <- function(obj) {
 ##   way_nodes <- split(obj$ways[[3]]$ref, obj$ways[[3]]$id)
 ##   way_nodes <- ways[sapply(way_nodes, length) >= 2]
 
