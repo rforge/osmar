@@ -12,6 +12,8 @@ Changes in osmar version 1.1-5
   o Fixed error when trying to plot an osmar object with nodes but
     without ways.
 
+  o Added citation (currently to a preprint of the accepted article).
+
 
 Changes in osmar version 1.1-4
 
