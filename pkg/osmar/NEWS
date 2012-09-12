@@ -14,6 +14,9 @@ Changes in osmar version 1.1-5
 
   o Added citation (currently to a preprint of the accepted article).
 
+  o Replaced 'subset's with '['s to avoid R CMD check notes "no
+    visible binding for global variable ...".
+
 
 Changes in osmar version 1.1-4
 

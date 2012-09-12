@@ -274,8 +274,8 @@ summary.relations <- function(object, ...) {
 
   ret$n <- c(relations = nrow(object$attrs),
              tags = nrow(object$tags),
-             node_refs = nrow(subset(object$refs, type == "node")),
-             way_refs = nrow(subset(object$refs, type == "way")))
+             node_refs = sum(object$refs$type == "node"),
+             way_refs = sum(object$refs$type == "way"))
 
   if ( ret$n["relations"] > 0 ) {
     ret$key <- sort(table(object$tags$k), decreasing = TRUE)
@@ -327,8 +327,8 @@ print.summary.relations <- function(x, max.print = 10, nchar.value = 20, ...) {
 print.relations <- function(x, ...) {
   n <- c(relations = nrow(x$attrs),
          tags = nrow(x$tags),
-         node_refs = nrow(subset(x$refs, type == "node")),
-         way_refs = nrow(subset(x$refs, type == "way")))
+         node_refs = sum(x$refs$type == "node"),
+         way_refs = sum(x$refs$type == "way"))
 
   cat(print_header("osmar$relations", n), "\n")
   invisible(x)
