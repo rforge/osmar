@@ -23,7 +23,6 @@ Suggests:
 License: GPL-2
 LazyLoad: yes
 URL: http://osmar.r-forge.r-project.org/
-Build-depends: roxygen2
 Collate:
     'osm-descriptors.R'
     'source.R'
