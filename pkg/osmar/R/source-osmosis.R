@@ -106,7 +106,7 @@ function(source, what, destination, ...) {
 
 
 setMethod("osm_request", signature = c("osmosis", "element"),
-function(source, what, ...) {
+function(source, what, destination, ...) {
   stop("Not implemented yet.")
 
   fin <- sprintf("--read-xml enableDateParsing=no file=%s", source$file)
