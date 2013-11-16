@@ -1,8 +1,8 @@
 Package: osmar
 Type: Package
 Title: OpenStreetMap and R
-Version: 1.1-6
-Date: 2013-08-23
+Version: 1.1-7
+Date: 2013-11-16
 Author: Thomas Schlesinger and Manuel J. A. Eugster
 Maintainer: Thomas Schlesinger
     <tho.schlesinger@googlemail.com>
@@ -15,7 +15,6 @@ Depends:
     methods,
     XML,
     RCurl,
-    gtools,
     geosphere
 Suggests:
     igraph,
