@@ -87,7 +87,8 @@ summary(gr_muc)
 
 route <- get.shortest.paths(gr_muc,
                             from = as.character(hway_start_node),
-                            to = as.character(hway_end_node))[[1]]
+                            to = as.character(hway_end_node), 
+                            mode = "all")[[1]]
 
 route_nodes <- as.numeric(V(gr_muc)[route]$name)
 
