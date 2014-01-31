@@ -2,7 +2,7 @@
 \alias{find_nearest_node}
 \title{Find nearest node with given conditions}
 \usage{
-  find_nearest_node(object, id, condition)
+find_nearest_node(object, id, condition)
 }
 \arguments{
   \item{object}{An \code{\link{osmar}} object}
@@ -13,11 +13,11 @@
   \code{\link{find}}}
 }
 \value{
-  A node ID or \code{NA}
+A node ID or \code{NA}
 }
 \description{
-  For a given ID, find nearest node (geographical distance)
-  with given conditions.
+For a given ID, find nearest node (geographical distance)
+with given conditions.
 }
 \examples{
 data("muc", package = "osmar")
@@ -26,7 +26,7 @@ data("muc", package = "osmar")
   find_nearest_node(muc, id, way(tags(k == "highway" & v == "pedestrian")))
 }
 \seealso{
-  Other finding: \code{\link{find}},
-  \code{\link{find_down}}, \code{\link{find_up}}
+Other finding: \code{\link{find_down}},
+\code{\link{find_up}}; \code{\link{find}}
 }
 

@@ -1,7 +1,7 @@
 Changes in osmar version 1.1-8
 
   o Fixed a bug in the "navigator" demo; thanks to Rainer Bacher.
-
+  o Added option 'encoding' in osmsource_api()
 
 Changes in osmar version 1.1-7
 

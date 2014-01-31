@@ -2,7 +2,7 @@
 \alias{get_osm}
 \title{Get OSM data}
 \usage{
-  get_osm(x, source = osmsource_api(), ...)
+get_osm(x, source = osmsource_api(), ...)
 }
 \arguments{
   \item{x}{Data identifier, e.g., bounding box or specific
@@ -17,11 +17,11 @@
   for a detailed list}
 }
 \value{
-  An \code{\link{osmar}} object
+An \code{\link{osmar}} object
 }
 \description{
-  Get OSM data as \code{\link{osmar}} object from different
-  sources by providing a bounding box.
+Get OSM data as \code{\link{osmar}} object from different
+sources by providing a bounding box.
 }
 \examples{
 \dontrun{
@@ -35,8 +35,8 @@
   }
 }
 \seealso{
-  \code{\link{bbox}}, \code{\link{osm_descriptors}},
-  \code{\link{osmsource_api}},
-  \code{\link{osmsource_osmosis}}
+\code{\link{bbox}}, \code{\link{osm_descriptors}},
+\code{\link{osmsource_api}},
+\code{\link{osmsource_osmosis}}
 }
 

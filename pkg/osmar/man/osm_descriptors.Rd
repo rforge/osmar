@@ -14,29 +14,29 @@
 \alias{way.default}
 \title{Element descriptors}
 \usage{
-  node(object)
+node(object)
 
-  way(object)
+way(object)
 
-  relation(object)
+relation(object)
 
-  \method{node}{default} (object)
+\method{node}{default}(object)
 
-  \method{way}{default} (object)
+\method{way}{default}(object)
 
-  \method{relation}{default} (object)
+\method{relation}{default}(object)
 
-  attrs(condition)
+attrs(condition)
 
-  tags(condition)
+tags(condition)
 
-  refs(condition)
+refs(condition)
 
-  \method{relation}{condition} (object)
+\method{relation}{condition}(object)
 
-  \method{relation}{condition} (object)
+\method{relation}{condition}(object)
 
-  \method{relation}{condition} (object)
+\method{relation}{condition}(object)
 }
 \arguments{
   \item{object}{The descriptor; see details}
@@ -44,9 +44,9 @@
   \item{condition}{Condition to describe the object}
 }
 \description{
-  For getting OSM data and finding elements in an
-  \code{\link{osmar}} object one needs to describe the
-  data---here we provide a simple description language.
+For getting OSM data and finding elements in an
+\code{\link{osmar}} object one needs to describe the
+data---here we provide a simple description language.
 }
 \examples{
 ## Description by ID (*.default):
@@ -59,6 +59,6 @@ relation(1)
   way(attrs(id == 17458))
 }
 \seealso{
-  \code{\link{bbox}}
+\code{\link{bbox}}
 }
 

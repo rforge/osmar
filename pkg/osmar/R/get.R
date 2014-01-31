@@ -35,7 +35,6 @@
 #'
 #' @import RCurl 
 #' @import XML
-#' @import gtools
 #' @import methods
 #' 
 #' @export

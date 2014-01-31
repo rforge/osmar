@@ -2,17 +2,16 @@
 \alias{as_igraph}
 \title{Convert osmar object to igraph}
 \usage{
-  as_igraph(obj)
+as_igraph(obj)
 }
 \arguments{
   \item{obj}{An \code{\link{osmar}} object}
 }
 \value{
-  An igraph-package \code{graph} object
+An igraph-package \code{graph} object
 }
 \description{
-  Convert an osmar object to an igraph (see
-  igraph-package).
+Convert an osmar object to an igraph (see igraph-package).
 }
 \examples{
 file <- system.file("extdata", "kaufstr.xml", package = "osmar")

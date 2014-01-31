@@ -4,15 +4,12 @@
 \alias{plot_ways}
 \title{Plot osmar object}
 \usage{
-  \method{plot}{osmar} (x,
-    way_args = list(col = gray(0.7)),
-    node_args = list(pch = 19, cex = 0.1, col = gray(0.3)),
-    ...)
+\method{plot}{osmar}(x, way_args = list(col = gray(0.7)),
+  node_args = list(pch = 19, cex = 0.1, col = gray(0.3)), ...)
 
-  plot_nodes(x, add = FALSE, ...)
+plot_nodes(x, add = FALSE, ...)
 
-  plot_ways(x, add = FALSE, xlab = "lon", ylab = "lat",
-    ...)
+plot_ways(x, add = FALSE, xlab = "lon", ylab = "lat", ...)
 }
 \arguments{
   \item{x}{An \code{\link{osmar}} object}
@@ -30,9 +27,9 @@
   \item{ylab}{A y-axis label}
 }
 \description{
-  Simple plotting functions to visualize
-  \code{\link{osmar}} objects. Note that for more complex
-  plots, we suggest to convert the objects into \code{sp}
-  and use their plotting functionality.
+Simple plotting functions to visualize \code{\link{osmar}}
+objects. Note that for more complex plots, we suggest to
+convert the objects into \code{sp} and use their plotting
+functionality.
 }
 

@@ -2,10 +2,9 @@
 \alias{subset.osmar}
 \title{Subset an osmar object}
 \usage{
-  \method{subset}{osmar} (x, node_ids = NULL,
-    way_ids = NULL, relation_ids = NULL,
-    ids = list(node_ids = node_ids, way_ids = way_ids, relation_ids = relation_ids),
-    ...)
+\method{subset}{osmar}(x, node_ids = NULL, way_ids = NULL,
+  relation_ids = NULL, ids = list(node_ids = node_ids, way_ids = way_ids,
+  relation_ids = relation_ids), ...)
 }
 \arguments{
   \item{x}{An \code{\link{osmar}} object}
@@ -24,11 +23,11 @@
   \item{...}{Ignored}
 }
 \value{
-  An \code{\link{osmar}} object containing the specified
-  elements
+An \code{\link{osmar}} object containing the specified
+elements
 }
 \description{
-  Subset an osmar object
+Subset an osmar object
 }
 \examples{
 data("muc", package = "osmar")

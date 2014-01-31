@@ -9,7 +9,7 @@
 #' OSM API version 0.6 data source; see
 #' \url{http://wiki.openstreetmap.org/wiki/API_v0.6}.
 #'
-#' @section Supported request elements:
+#' #' @section Supported request elements:
 #'
 #' \describe{
 #'   \item{Bounding box:}{
@@ -58,6 +58,7 @@
 #' }
 #'
 #' @param url URL of the API
+#' @param encoding encoding specified as in \code{.encoding} parameter in \code{\link[RCurl]{getURL}}. Default is \code{"UTF-8"}.
 #'
 #' @examples
 #'   \dontrun{
@@ -77,15 +78,17 @@
 #' @family osmsource
 #'
 #' @export
-osmsource_api <- function(url = "http://api.openstreetmap.org/api/0.6/") {
-  osmsource(list(url = url), "api")
+osmsource_api <- function(url = "http://api.openstreetmap.org/api/0.6/", encoding = "UTF-8") {
+  ret <- osmsource(list(url = url), "api")
+  attr(ret, "encoding") <- encoding
+  ret
 }
 
 
 
 get_osm_data.api <- function(source, what, ...) {
   request <- osm_request(source, what, ...)
-  response <- getURL(request, .encoding = "UTF-8")
+  response <- getURL(request, encoding = attr(source, "encoding"))
 
   response
 }

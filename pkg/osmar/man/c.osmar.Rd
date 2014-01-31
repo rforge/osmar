@@ -2,18 +2,17 @@
 \alias{c.osmar}
 \title{Combine osmar objects}
 \usage{
-  \method{c}{osmar} (...)
+\method{c}{osmar}(...)
 }
 \arguments{
   \item{...}{\code{\link{osmar}} objects to be
   concatenated}
 }
 \value{
-  An \code{\link{osmar}} object based on the provided
-  objects
+An \code{\link{osmar}} object based on the provided objects
 }
 \description{
-  Combine two or more \code{\link{osmar}} objects.
+Combine two or more \code{\link{osmar}} objects.
 }
 \examples{
 \dontrun{

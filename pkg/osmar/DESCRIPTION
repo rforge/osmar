@@ -2,7 +2,7 @@ Package: osmar
 Type: Package
 Title: OpenStreetMap and R
 Version: 1.1-8
-Date: 2013-12-22
+Date: 2014-01-31
 Author: Thomas Schlesinger and Manuel J. A. Eugster
 Maintainer: Thomas Schlesinger
     <tho.schlesinger@googlemail.com>
@@ -24,12 +24,14 @@ LazyLoad: yes
 URL: http://osmar.r-forge.r-project.org/
 Collate:
     'osm-descriptors.R'
-    'source.R'
     'osmar-plotting.R'
     'as-osmar-elements.R'
     'as-osmar.R'
+    'as-igraph.R'
     'as-osm.R'
+    'as-osmar-sp.R'
     'as-sp.R'
+    'source.R'
     'get.R'
     'osmar-subsetting.R'
     'osmar-finding.R'
@@ -37,5 +39,3 @@ Collate:
     'source-api.R'
     'source-file.R'
     'source-osmosis.R'
-    'as-osmar-sp.R'
-    'as-igraph.R'

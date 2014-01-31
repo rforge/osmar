@@ -2,7 +2,7 @@
 \alias{find}
 \title{Find element for a given condition}
 \usage{
-  find(object, condition)
+find(object, condition)
 }
 \arguments{
   \item{object}{An \code{\link{osmar}} object}
@@ -11,22 +11,22 @@
   details section.}
 }
 \value{
-  The ID of the the element
+The ID of the the element
 }
 \description{
-  Find element for a given condition
+Find element for a given condition
 }
 \details{
-  The basis of an \code{\link{osmar}} object are
-  \code{data.frame}s; therefore the \code{condition}
-  principally follows the rules for
-  \code{\link[base]{subset}}: logical expression indicating
-  elements or rows to keep.
+The basis of an \code{\link{osmar}} object are
+\code{data.frame}s; therefore the \code{condition}
+principally follows the rules for
+\code{\link[base]{subset}}: logical expression indicating
+elements or rows to keep.
 
-  Furthermore, one has to define on which element and which
-  data of the \code{\link{osmar}} object the condition
-  applies: \code{element(data(condition))}, see
-  \code{\link{osm_descriptors}}.
+Furthermore, one has to define on which element and which
+data of the \code{\link{osmar}} object the condition
+applies: \code{element(data(condition))}, see
+\code{\link{osm_descriptors}}.
 }
 \examples{
 data("muc", package = "osmar")
@@ -36,9 +36,9 @@ data("muc", package = "osmar")
   find(muc, way(tags(k == "highway" & v == "pedestrian")))
 }
 \seealso{
-  binary_grep
+binary_grep
 
-  Other finding: \code{\link{find_down}},
-  \code{\link{find_nearest_node}}, \code{\link{find_up}}
+Other finding: \code{\link{find_down}},
+\code{\link{find_up}}; \code{\link{find_nearest_node}}
 }
 

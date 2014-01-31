@@ -3,13 +3,13 @@
 \alias{osmsource_file}
 \title{OSM file data source}
 \usage{
-  osmsource_file(file)
+osmsource_file(file)
 }
 \arguments{
   \item{file}{The file name (and path) of the osm file}
 }
 \description{
-  Imports the complete OSM file.
+Imports the complete OSM file.
 }
 \section{Supported request elements}{
   \describe{
@@ -26,10 +26,10 @@
   }
 }
 \seealso{
-  \code{\link{get_osm}}, \code{\link{bbox}},
-  \code{\link{osm_descriptors}}
+\code{\link{get_osm}}, \code{\link{bbox}},
+\code{\link{osm_descriptors}}
 
-  Other osmsource: \code{\link{osmsource_api}},
-  \code{\link{osmsource_osmosis}}
+Other osmsource: \code{\link{osmsource_api}};
+\code{\link{osmsource_osmosis}}
 }
 

@@ -2,14 +2,22 @@
 \alias{osmsource_api}
 \title{API OSM data source}
 \usage{
-  osmsource_api(url = "http://api.openstreetmap.org/api/0.6/")
+osmsource_api(url = "http://api.openstreetmap.org/api/0.6/",
+  encoding = "UTF-8")
 }
 \arguments{
   \item{url}{URL of the API}
+
+  \item{encoding}{encoding specified as in \code{.encoding}
+  parameter in \code{\link[RCurl]{getURL}}. Default is
+  \code{"UTF-8"}.}
 }
 \description{
-  OSM API version 0.6 data source; see
-  \url{http://wiki.openstreetmap.org/wiki/API_v0.6}.
+OSM API version 0.6 data source; see
+\url{http://wiki.openstreetmap.org/wiki/API_v0.6}.
+}
+\details{
+#'
 }
 \section{Supported request elements}{
   \describe{ \item{Bounding box:}{
@@ -67,13 +75,14 @@
   }
 }
 \references{
-  \url{http://wiki.openstreetmap.org/wiki/API_v0.6}
+\url{http://wiki.openstreetmap.org/wiki/API_v0.6}
 }
 \seealso{
-  \code{\link{get_osm}}, \code{\link{bbox}},
-  \code{\link{osm_descriptors}}
+\code{\link{get_osm}}, \code{\link{bbox}},
+\code{\link{osm_descriptors}}
 
-  Other osmsource: \code{\link{osmsource_file}},
-  \code{\link{osmsource_osmosis}}
+Other osmsource: \code{\link{complete_file}},
+\code{\link{osmsource_file}};
+\code{\link{osmsource_osmosis}}
 }
 
